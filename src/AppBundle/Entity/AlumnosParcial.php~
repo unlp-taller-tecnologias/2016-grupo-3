@@ -1,0 +1,41 @@
+<?php
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table (name="alumnosParcial")
+ */
+class AlumnosParcial
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string", length=50) **/
+    protected $nombre;
+
+    /** @ORM\Column(type="string", length=200) **/
+    protected $observacion;
+
+    /** @ORM\Column(type="string", length=50) **/
+    protected $nota;
+    
+     /** @ORM\Column(type="string", columnDefinition="ENUM('ausente', 'presente','justificado')") */
+    private $estado;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="instanciasParciales")
+     */
+    protected $alumnos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="InstanciaParcial", inversedBy="alumnos")
+     */
+    protected $parciales;
+
+}

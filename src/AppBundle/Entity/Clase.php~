@@ -1,0 +1,46 @@
+<?php
+
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table (name="clase")
+ */
+class Clase
+{
+
+	/**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string", length=50) **/
+    protected $nombre;
+
+    /** @ORM\Column(type="string", length=200) **/
+    protected $descripcion;
+
+    /** @ORM\Column(type="boolean") **/
+    protected $requerida=true;
+
+    /** @ORM\Column(type="datetime") **/
+    protected $fecha;
+    
+     /** @ORM\Column(type="string", columnDefinition="ENUM('pendiente', 'suspendida','finalizada')") */
+    private $estado;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AlumnoClase", mappedBy="clases")
+     */
+    protected $alumnos;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Cursada")
+     */
+    protected $cursada;
+
+}

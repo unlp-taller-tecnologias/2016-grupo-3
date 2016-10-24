@@ -1,0 +1,37 @@
+<?php
+
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table (name="alumnoClase")
+ */
+class AlumnoClase
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string", length=200) **/
+    protected $observacion;
+    
+     /** @ORM\Column(type="string", columnDefinition="ENUM('ausente', 'presente','justificado')") */
+    private $estado;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="clases")
+     */
+    protected $alumnos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Clase", inversedBy="alumnos")
+     */
+    protected $clases;
+
+}

@@ -1,0 +1,44 @@
+<?php
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table (name="alumno")
+ */
+class Alumno Extends Usuario
+{
+
+    /** @ORM\Column(type="string", length=8, unique=true) **/
+    protected $legajo=-1;
+
+	/** @ORM\Column(type="boolean") **/
+	protected $habilitado=true;
+
+    /** @ORM\Column(type="string",length=30, nullable=true) **/
+    protected $origen=null;
+	/**
+     * @ORM\ManyToMany(targetEntity="Comision", inversedBy="alumnos")
+     * @ORM\JoinTable(name="alumnos_comisiones")
+     */
+    protected $comisiones;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AlumnoClase", mappedBy="alumnos")
+     */
+    protected $clases;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AlumnosParcial", mappedBy="alumnos")
+     */
+    protected $instanciasParciales;
+
+    public function __construct() {
+        $this->comisiones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->clases = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->instanciasParciales = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
+}

@@ -1,0 +1,39 @@
+<?php
+
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table (name="usuario")
+ */
+class Usuario
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string",length=255) **/
+    protected $password;
+
+    /** @ORM\Column(type="string",length=255, nullable=true) **/
+    protected $nombre=null;
+
+    /** @ORM\Column(type="string",length=255, nullable=true) **/
+    protected $apellido=null;
+
+    /** @ORM\Column(type="string", length=15, unique=true, nullable=true) **/
+    protected $documento=null;
+
+    /** @ORM\Column(type="string", length=100, unique=true, nullable=true) **/
+    protected $email=null;
+
+    /** @ORM\Column(type="string",length=30, nullable=true) **/
+    protected $telefono=null;
+
+    /** @ORM\Column(type="string",length=30, nullable=true) **/
+    protected $celular=null;
+}
