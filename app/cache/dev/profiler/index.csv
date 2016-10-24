@@ -1,0 +1,17 @@
+7e4dee,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476301490,,200
+628c92,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302430,,200
+67f0a2,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302431,,200
+a7ab99,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302431,,200
+881803,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302505,,200
+ecf7ca,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302666,,200
+cbe619,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302679,,200
+fa4518,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/login,1476302704,f3f7fb,200
+f3f7fb,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/login,1476302704,,404
+0c219d,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302825,dc9fdd,200
+dc9fdd,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302826,,500
+0a5ef2,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302828,5193bc,200
+5193bc,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302828,,500
+2b5d6a,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302902,8237c6,200
+8237c6,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302903,,500
+846c75,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476302933,,200
+52de93,::1,GET,http://localhost:8888/2016-grupo-3/web/app_dev.php/,1476880139,,200
