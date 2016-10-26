@@ -35,7 +35,7 @@ class InstanciaParcial
     protected $alumnos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Parcial")
+     * @ORM\ManyToOne(targetEntity="Parcial", inversedBy="instancias")
      */
     protected $parcial;
 
@@ -46,6 +46,8 @@ class InstanciaParcial
     {
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    
 
     /**
      * Get id

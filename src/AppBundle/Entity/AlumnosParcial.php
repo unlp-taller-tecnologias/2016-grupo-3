@@ -29,7 +29,7 @@ class AlumnosParcial
     private $estado;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="instanciasParciales")
+     * @ORM\ManyToOne(targetEntity="Alumnos", inversedBy="instanciasParciales")
      */
     protected $alumnos;
 
@@ -38,6 +38,8 @@ class AlumnosParcial
      */
     protected $parciales;
 
+
+   
 
     /**
      * Get id
@@ -144,10 +146,10 @@ class AlumnosParcial
     /**
      * Set alumnos
      *
-     * @param \AppBundle\Entity\Alumno $alumnos
+     * @param \AppBundle\Entity\Alumnos $alumnos
      * @return AlumnosParcial
      */
-    public function setAlumnos(\AppBundle\Entity\Alumno $alumnos = null)
+    public function setAlumnos(\AppBundle\Entity\Alumnos $alumnos = null)
     {
         $this->alumnos = $alumnos;
     
@@ -157,7 +159,7 @@ class AlumnosParcial
     /**
      * Get alumnos
      *
-     * @return \AppBundle\Entity\Alumno 
+     * @return \AppBundle\Entity\Alumnos 
      */
     public function getAlumnos()
     {

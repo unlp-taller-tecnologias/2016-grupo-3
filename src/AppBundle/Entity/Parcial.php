@@ -30,12 +30,19 @@ class Parcial
     protected $instancias;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Cursos", inversedBy="parciales")
+     */
+    protected $cursada;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->instancias = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    
 
     /**
      * Get id
@@ -124,5 +131,28 @@ class Parcial
     public function getInstancias()
     {
         return $this->instancias;
+    }
+
+    /**
+     * Set cursada
+     *
+     * @param \AppBundle\Entity\Cursos $cursada
+     * @return Parcial
+     */
+    public function setCursada(\AppBundle\Entity\Cursos $cursada = null)
+    {
+        $this->cursada = $cursada;
+    
+        return $this;
+    }
+
+    /**
+     * Get cursada
+     *
+     * @return \AppBundle\Entity\Cursos 
+     */
+    public function getCursada()
+    {
+        return $this->cursada;
     }
 }

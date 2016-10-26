@@ -39,7 +39,7 @@ class Clase
     protected $alumnos;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cursada")
+     * @ORM\ManyToOne(targetEntity="Cursos", inversedBy="clases")
      */
     protected $cursada;
 
@@ -50,6 +50,8 @@ class Clase
     {
         $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    
 
     /**
      * Get id
@@ -212,10 +214,10 @@ class Clase
     /**
      * Set cursada
      *
-     * @param \AppBundle\Entity\Cursada $cursada
+     * @param \AppBundle\Entity\Cursos $cursada
      * @return Clase
      */
-    public function setCursada(\AppBundle\Entity\Cursada $cursada = null)
+    public function setCursada(\AppBundle\Entity\Cursos $cursada = null)
     {
         $this->cursada = $cursada;
     
@@ -225,7 +227,7 @@ class Clase
     /**
      * Get cursada
      *
-     * @return \AppBundle\Entity\Cursada 
+     * @return \AppBundle\Entity\Cursos 
      */
     public function getCursada()
     {
