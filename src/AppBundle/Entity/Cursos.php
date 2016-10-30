@@ -50,7 +50,7 @@ class Cursos
     protected $comisiones;
 
     /**
-     * @ORM\ManyToMany(targetEntity="FosUser", mappedBy="cursadas")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="cursadas")
      */
     private $docentes;
     /**
@@ -188,7 +188,7 @@ class Cursos
      * @param \AppBundle\Entity\FosUser $docentes
      * @return Cursos
      */
-    public function addDocente(\AppBundle\Entity\FosUser $docentes)
+    public function addDocente(\AppBundle\Entity\User $docentes)
     {
         $this->docentes[] = $docentes;
     
@@ -200,7 +200,7 @@ class Cursos
      *
      * @param \AppBundle\Entity\FosUser $docentes
      */
-    public function removeDocente(\AppBundle\Entity\FosUser $docentes)
+    public function removeDocente(\AppBundle\Entity\User $docentes)
     {
         $this->docentes->removeElement($docentes);
     }
@@ -280,4 +280,8 @@ class Cursos
     {
         return $this->clases;
     }
+
+    public function __toString() {
+    return $this->nombre;
+}
 }

@@ -34,13 +34,20 @@ class Catedras
      * @ORM\Column(name="borrado", type="integer", nullable=false)
      */
     private $borrado;
+    
     /**
-     * @ORM\OneToOne(targetEntity="FosUser")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="catedra")
      */
-    protected $secretario;
+    protected $usuarios;
 
-
-
+    public function __toString() {
+        return $this->nombre;
+    }
+    
+    public function __construct() {
+        $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
+        
+    }
 
     /**
      * Get id
@@ -101,10 +108,10 @@ class Catedras
     /**
      * Set secretario
      *
-     * @param \AppBundle\Entity\FosUser $secretario
+     * @param \AppBundle\Entity\User $secretario
      * @return Catedras
      */
-    public function setSecretario(\AppBundle\Entity\FosUser $secretario = null)
+    public function setSecretario(\AppBundle\Entity\User  $secretario)
     {
         $this->secretario = $secretario;
     
@@ -114,10 +121,43 @@ class Catedras
     /**
      * Get secretario
      *
-     * @return \AppBundle\Entity\FosUser 
+     * @return \AppBundle\Entity\User 
      */
     public function getSecretario()
     {
         return $this->secretario;
+    }
+
+    /**
+     * Add usuarios
+     *
+     * @param \AppBundle\Entity\User $usuarios
+     * @return Catedras
+     */
+    public function addUsuario(\AppBundle\Entity\User $usuarios)
+    {
+        $this->usuarios[] = $usuarios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove usuarios
+     *
+     * @param \AppBundle\Entity\User $usuarios
+     */
+    public function removeUsuario(\AppBundle\Entity\User $usuarios)
+    {
+        $this->usuarios->removeElement($usuarios);
+    }
+
+    /**
+     * Get usuarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
     }
 }

@@ -42,7 +42,9 @@ class Parcial
         $this->instancias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    
+    public function __toString() {
+        return $this->nombre;
+    }
 
     /**
      * Get id

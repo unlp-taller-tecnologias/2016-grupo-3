@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Clase list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Requerida</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for clase in clases %}
+            <tr>
+                <td><a href="{{ path('clase_show', { 'id': clase.id }) }}">{{ clase.id }}</a></td>
+                <td>{{ clase.nombre }}</td>
+                <td>{{ clase.descripcion }}</td>
+                <td>{% if clase.requerida %}Yes{% else %}No{% endif %}</td>
+                <td>{% if clase.fecha %}{{ clase.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ clase.estado }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('clase_show', { 'id': clase.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('clase_edit', { 'id': clase.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('clase_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+				    <fieldset>
+					    <div class="form-group input-group">
+						  <span class="input-group-addon">
+							<i class="glyphicon glyphicon-user"></i>
+						  </span>
+					    	<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control"/>
+						</div>
+					    <div class="form-group input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-lock">
+								</i>
+							</span>
+					    	<input type="password" id="password" name="_password" required="required" class="form-control"/>
+					    </div>
+					    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    			<label for="remember_me">Recordarme</label>
+
+				    	<input type="submit" id="_submit" name="_submit" value="Entrar"/>
+					</fieldset>
+					</form>
+{% endblock body %}
+  
+{#		
+    <body  style="font-family: 'Dosis-Book'; background-color:#870028; " >
+        {% block body %}
+<div class="container" >
+ <div class="col-md-4"></div>
+	<div class="col-md-4 " style="margin-top: 100px;"  id="form" >
+		  <h4 style="border-bottom: 1px solid #c5c5c5;">
+		 	<img src="{{ asset('bundles/framework/images/encabezado.png') }}" class="img-responsive" style="margin:0 auto;width:450px;"/>
+			<p style="margin: 0 auto; font-family: 'Dosis-Book'; "></p>
+		  </h4>
+		  <div style="padding: 15px;" id="form-olvidado">
+			{% if error %}
+				    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+
+				
+				 <div class="col-md-4"></div>
+		  </div>
+	</div>
+</div>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+   #}

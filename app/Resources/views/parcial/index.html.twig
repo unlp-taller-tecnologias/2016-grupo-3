@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Parcial list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parcial in parcials %}
+            <tr>
+                <td><a href="{{ path('parcial_show', { 'id': parcial.id }) }}">{{ parcial.id }}</a></td>
+                <td>{{ parcial.nombre }}</td>
+                <td>{{ parcial.descripcion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('parcial_show', { 'id': parcial.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('parcial_edit', { 'id': parcial.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('parcial_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

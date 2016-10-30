@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>InstanciaParcial list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for instanciaParcial in instanciaParcials %}
+            <tr>
+                <td><a href="{{ path('instanciaparcial_show', { 'id': instanciaParcial.id }) }}">{{ instanciaParcial.id }}</a></td>
+                <td>{{ instanciaParcial.nombre }}</td>
+                <td>{{ instanciaParcial.descripcion }}</td>
+                <td>{% if instanciaParcial.fecha %}{{ instanciaParcial.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ instanciaParcial.estado }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('instanciaparcial_show', { 'id': instanciaParcial.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('instanciaparcial_edit', { 'id': instanciaParcial.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('instanciaparcial_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
