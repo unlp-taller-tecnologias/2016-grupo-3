@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-         <div class="contenedor2" style="height:550px;"> 
-            <div class="divlog" id="divlog" > 
-            
-            Bienvenido!
-            <a href="app_dev.php/login" >Entrar al sitio</a>
-        </div>
 
-        </div>
-        </div>
-    </div>
+    <div class="col-md-4"></div>
+                <div class="col-md-4 " style="margin-top: 100px;"  id="form" >
+                <h4 style="border-bottom: 1px solid #c5c5c5;">
+                   <img src="{{ asset('bundles/framework/images/encabezado.png') }}" class="img-responsive" style="margin:0 auto;width:450px;"/>
+                    <p style="margin: 0 auto; font-family: 'Dosis-Book'; "></p>
+                </h4><br>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8"> Bienvenido!
+            <a href="app_dev.php/login" >Entrar al sitio</a></div>
+                <div class="col-sm-2"></div>
+                
+            </div>
+            <div class="col-md-4"></div>
 {% endblock %}
 
 {% block stylesheets %}

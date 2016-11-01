@@ -2251,11 +2251,17 @@ pre code {
 table {
   background-color: transparent;
 }
-caption {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  color: #777;
-  text-align: left;
+caption { 
+  border-top-left-radius:1em;
+  border-top-right-radius:1em;
+  margin-top:2%;
+  background: #870028;
+  color: white;
+  text-align: center;
+  padding:0.5em;
+  font-family:'Dosis-Book', sans-serif;
+  font-size:16px ;
+  font-weight: normal;
 }
 th {
   text-align: left;
@@ -6774,3 +6780,7 @@ button.close {
     margin: 0 auto;
     margin-bottom: 35px;
   }
+
+
+
+
