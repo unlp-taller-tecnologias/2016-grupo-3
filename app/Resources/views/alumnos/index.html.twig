@@ -6,42 +6,25 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Password</th>
+                <th>Legajo</th>
                 <th>Apellido</th>
                 <th>Nombre</th>
                 <th>Dni</th>
-                <th>Legajo</th>
-                <th>Origen</th>
                 <th>Telefono</th>
                 <th>Celular</th>
                 <th>Mail</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for alumno in alumnos %}
+        {% for inscripto in inscriptos %}
             <tr>
-                <td><a href="{{ path('alumnos_show', { 'id': alumno.id }) }}">{{ alumno.id }}</a></td>
-                <td>{{ alumno.password }}</td>
-                <td>{{ alumno.apellido }}</td>
-                <td>{{ alumno.nombre }}</td>
-                <td>{{ alumno.dni }}</td>
-                <td>{{ alumno.legajo }}</td>
-                <td>{{ alumno.origen }}</td>
-                <td>{{ alumno.telefono }}</td>
-                <td>{{ alumno.celular }}</td>
-                <td>{{ alumno.mail }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('alumnos_show', { 'id': alumno.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('alumnos_edit', { 'id': alumno.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('alumnos_show', { 'id': inscripto.idAlumno.id }) }}">{{ inscripto.idAlumno.legajo }}</a></td>
+                <td>{{ inscripto.idAlumno.apellido }}</td>
+                <td>{{ inscripto.idAlumno.nombre }}</td>
+                <td>{{ inscripto.idAlumno.dni }}</td>
+                <td>{{ inscripto.idAlumno.telefono }}</td>
+                <td>{{ inscripto.idAlumno.celular }}</td>
+                <td>{{ inscripto.idAlumno.mail }}</td>
             </tr>
         {% endfor %}
         </tbody>

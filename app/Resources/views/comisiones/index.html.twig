@@ -1,41 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <a href="{{ path('comisiones_new') }}">Create a new entry</a>
+ <a href="{{ path('parcial_index') }}">Parciales de la cursada</a></br>
+ <a href="{{ path('clase_index') }}">Clases de la cursada</a>
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
          <caption>Lista de Comisiones</caption>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
-                <th>Limvisible</th>
                 <th>Descripcion</th>
-                <th>Activo</th>
                 <th>Inscriptos</th>
-                <th>Borrado</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for comisione in comisiones %}
             <tr>
-                <td><a href="{{ path('comisiones_show', { 'id': comisione.id }) }}">{{ comisione.id }}</a></td>
-                <td>{{ comisione.nombre }}</td>
-                <td>{{ comisione.limvisible }}</td>
+                <td><a href="{{ path('alumnos_index', { 'id': comisione.id }) }}">{{ comisione.nombre }}</a></td>
                 <td>{{ comisione.descripcion }}</td>
-                <td>{% if comisione.activo %}Yes{% else %}No{% endif %}</td>
                 <td>{{ comisione.inscriptos }}</td>
-                <td>{{ comisione.borrado }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('comisiones_show', { 'id': comisione.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('comisiones_edit', { 'id': comisione.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>

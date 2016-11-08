@@ -7,28 +7,13 @@
         <caption>Lista de Cursos</caption>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
-                <th>Borrado</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for curso in cursos %}
             <tr>
-                <td><a href="{{ path('cursos_show', { 'id': curso.id }) }}">{{ curso.id }}</a></td>
-                <td>{{ curso.nombre }}</td>
-                <td>{{ curso.borrado }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('cursos_show', { 'id': curso.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('cursos_edit', { 'id': curso.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('comisiones_index', { 'id': curso.id }) }}">{{ curso.nombre }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

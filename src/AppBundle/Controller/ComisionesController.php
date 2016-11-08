@@ -25,12 +25,18 @@ class ComisionesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $comisiones = $em->getRepository('AppBundle:Comisiones')->findAll();
-
+        $catedra = $this->getUser()->getCatedra();
+        if (isset($catedra)) {    
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
+             if (isset($curso)) {
+                if ( $curso->getIdcatedra()->getId() == $catedra->getId()) {
+                           $comisiones = $em->getRepository('AppBundle:Comisiones')->findByIdcurso($_GET['id']);
+                       } else $comisiones = '';
+            } else $comisiones = '';   
+        } else $comisiones = '';
         return $this->render('comisiones/index.html.twig', array(
             'comisiones' => $comisiones,
-        ));
+            ));
     }
 
     /**

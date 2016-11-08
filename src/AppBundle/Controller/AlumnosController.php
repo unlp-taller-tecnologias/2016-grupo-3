@@ -25,12 +25,20 @@ class AlumnosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $alumnos = $em->getRepository('AppBundle:Alumnos')->findAll();
-
+        $catedra = $this->getUser()->getCatedra();
+        if (isset($catedra)) {    
+            $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id']);
+             if (isset($comision)) {
+                $curso = $comision->getIdcurso();
+                if ( $curso->getIdcatedra()->getId() == $catedra->getId()) {
+                           $inscriptos = $comision->getAlumnos();
+                       } else $inscriptos = '';
+            } else $inscriptos = '';   
+        } else $inscriptos = '';
+        //var_dump($alumnos);die();
         return $this->render('alumnos/index.html.twig', array(
-            'alumnos' => $alumnos,
-        ));
+            'inscriptos' => $inscriptos,
+            ));
     }
 
     /**
