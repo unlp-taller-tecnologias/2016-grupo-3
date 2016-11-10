@@ -25,12 +25,12 @@ class AlumnosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $catedra = $this->getUser()->getCatedra();
+        $catedra = getIdcatedra($this,$em);
         if (isset($catedra)) {    
             $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id']);
              if (isset($comision)) {
                 $curso = $comision->getIdcurso();
-                if ( $curso->getIdcatedra()->getId() == $catedra->getId()) {
+                if ( $curso->getIdcatedra()->getId() == $catedra) {
                            $inscriptos = $comision->getAlumnos();
                        } else $inscriptos = '';
             } else $inscriptos = '';   

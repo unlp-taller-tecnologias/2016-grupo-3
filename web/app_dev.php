@@ -19,6 +19,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 }
 
 /** @var \Composer\Autoload\ClassLoader $loader */
+require_once __DIR__.'/../src/AppBundle/function.inc.php';
 $loader = require __DIR__.'/../app/autoload.php';
 //Debug::enable();
 

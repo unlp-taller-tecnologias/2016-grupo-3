@@ -25,9 +25,9 @@ class CursosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $catedra = $this->getUser()->getCatedra();
+        $userManager = $this->get('fos_user.user_manager');
         if (isset($catedra)) {
-        $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra->getId());
+        $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
 
         return $this->render('cursos/index.html.twig', array(
             'cursos' => $cursos,
