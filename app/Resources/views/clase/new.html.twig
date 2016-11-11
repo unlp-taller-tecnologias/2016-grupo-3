@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Clase creation</h1>
+     <h1>Nueva Clase</h1>
+    <div class="col-md-4"></div>
+    <div class="col-md-4"> </div>
+    <div class="col-md-4"></div>
+   
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -13,4 +17,4 @@
             <a href="{{ path('clase_index') }}">Back to the list</a>
         </li>
     </ul>
-{% endblock %}
+{% endblock body %}
