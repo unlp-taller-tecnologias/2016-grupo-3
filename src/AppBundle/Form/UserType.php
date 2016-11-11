@@ -3,10 +3,11 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+//use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class UserType extends  AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,10 +16,8 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('catedra')
             ->add('username')
             ->add('password','password')
-            ->add('email')
         ;
     }
     
@@ -32,3 +31,5 @@ class UserType extends AbstractType
         ));
     }
 }
+
+

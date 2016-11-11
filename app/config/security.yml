@@ -37,10 +37,10 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_USER }
-        - { path: ^/cursos, role: ROLE_DOCENTE }
-        - { path: ^/docentes, role: ROLE_ADMIN }
-        - { path: ^/comisiones, role: ROLE_DOCENTE }
-        - { path: ^/alumnos, role: ROLE_DOCENTE }
-        - { path: ^/parcial, role: ROLE_DOCENTE }
-        - { path: ^/clase, role: ROLE_DOCENTE }
-        - { path: ^/instanciaparcial, role: ROLE_DOCENTE }
+        - { path: ^/cursos, role: ROLE_USER }
+        - { path: ^/docentes, role: ROLE_USER }
+        - { path: ^/comisiones, role: ROLE_USER }
+        - { path: ^/alumnos, role: ROLE_USER }
+        - { path: ^/parcial, role: ROLE_USER }
+        - { path: ^/clase, role: ROLE_USER }
+        - { path: ^/instanciaparcial, role: ROLE_USER }
