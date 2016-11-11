@@ -1,5 +1,5 @@
 <?php
-function getIdcatedra($controller,$em) {
+function getIdCatedra($controller,$em) {
         $catedra = $controller->getUser()->getCatedra();
         if (null != $catedra) $catedra = $catedra->getId();
         else {

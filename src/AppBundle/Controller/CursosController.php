@@ -25,7 +25,8 @@ class CursosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $userManager = $this->get('fos_user.user_manager');
+        $catedra = getIdCatedra($this,$em);
+        //$userManager = $this->get('fos_user.user_manager');
         if (isset($catedra)) {
         $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
 

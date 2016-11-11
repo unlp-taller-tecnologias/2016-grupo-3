@@ -3,10 +3,11 @@
 {% block body %}
     <h1>NUEVO USUARIO</h1>
 
-<form name="user" method="post">
-        <input type="text" name='user[username]'/>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
         <input type="submit" value="Create" />
-</form>
+    {{ form_end(form) }}
+
     <ul>
         <li>
             <a href="{{ path('user_index') }}">Back to the list</a>

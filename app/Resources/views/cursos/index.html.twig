@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-   
-  <a href="{{ path('cursos_new') }}">Create a new entry</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('cursos_new') }}">Create a new entry</a>
+    {% endif %}
+  
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Lista de Cursos</caption>
         <thead>

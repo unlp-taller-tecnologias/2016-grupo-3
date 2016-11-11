@@ -25,11 +25,12 @@ class ComisionesController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $catedra = $this->getUser()->getCatedra();
+        //$catedra = $this->getUser()->getCatedra();
+        $catedra = getIdCatedra($this,$em);
         if (isset($catedra)) {    
             $curso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
              if (isset($curso)) {
-                if ( $curso->getIdcatedra()->getId() == $catedra->getId()) {
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
                            $comisiones = $em->getRepository('AppBundle:Comisiones')->findByIdcurso($_GET['id']);
                        } else $comisiones = '';
             } else $comisiones = '';   
