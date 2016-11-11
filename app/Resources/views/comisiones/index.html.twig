@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
- <a href="{{ path('parcial_index') }}">Parciales de la cursada</a></br>
- <a href="{{ path('clase_index') }}">Clases de la cursada</a>
+    <div class="col-md-2"><a href="{{ path('parcial_index') }}" class="btn btn-primary">Parciales de la cursada</a></br></div>
+    <div class="col-md-2"> <a href="{{ path('clase_index') }}" class="btn btn-primary">Clases de la cursada</a></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
+ 
+
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
          <caption>Lista de Comisiones</caption>
         <thead>
