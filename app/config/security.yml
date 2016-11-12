@@ -5,9 +5,9 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_DOCENTE:     ROLE_USER
-        ROLE_ADMIN:       ROLE_DOCENTE
+        ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_SUPER_ADMIN: ROLE_SUPER_ADMIN
 
 
 
@@ -44,3 +44,4 @@ security:
         - { path: ^/parcial, role: ROLE_USER }
         - { path: ^/clase, role: ROLE_USER }
         - { path: ^/instanciaparcial, role: ROLE_USER }
+        - { path: ^/catedras, role: ROLE_SUPER_SUPER_ADMIN }

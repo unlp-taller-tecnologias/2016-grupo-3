@@ -23,6 +23,35 @@ class User extends BaseUser
      */
     protected $catedra;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellido", type="string", length=255, nullable=true)
+     */
+    private $apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dni", type="string", length=15, nullable=true)
+     */
+    private $dni;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cargo", type="string", length=50, nullable=true)
+     */
+    private $cargo;
+
+
     public function __construct() {
         parent::__construct();
         // your own logic

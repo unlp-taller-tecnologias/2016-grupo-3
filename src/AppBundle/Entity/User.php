@@ -23,6 +23,35 @@ class User extends BaseUser
      */
     protected $catedra;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellido", type="string", length=255, nullable=true)
+     */
+    private $apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dni", type="string", length=15, nullable=true)
+     */
+    private $dni;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cargo", type="string", length=50, nullable=true)
+     */
+    private $cargo;
+
+
     public function __construct() {
         parent::__construct();
         // your own logic
@@ -85,5 +114,97 @@ class User extends BaseUser
     public function getCursadas()
     {
         return $this->cursadas;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     * @return User
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+    
+        return $this;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string 
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return User
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set dni
+     *
+     * @param string $dni
+     * @return User
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+    
+        return $this;
+    }
+
+    /**
+     * Get dni
+     *
+     * @return string 
+     */
+    public function getDni()
+    {
+        return $this->dni;
+    }
+
+    /**
+     * Set cargo
+     *
+     * @param string $cargo
+     * @return User
+     */
+    public function setCargo($cargo)
+    {
+        $this->cargo = $cargo;
+    
+        return $this;
+    }
+
+    /**
+     * Get cargo
+     *
+     * @return string 
+     */
+    public function getCargo()
+    {
+        return $this->cargo;
     }
 }
