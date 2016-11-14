@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>NUEVO USUARIO</h1>
+    <h1>NUEVO DOCENTE</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input class="btn btn-primary" type="submit" value="Registrar docente" />
+        <a class="btn btn-primary" href="{{ asset('')}}">Cancelar</a> 
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('user_index') }}">Back to the list</a>
-        </li>
-    </ul>
+        
 {% endblock %}
