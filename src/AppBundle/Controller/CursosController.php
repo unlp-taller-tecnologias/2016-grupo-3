@@ -26,12 +26,19 @@ class CursosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $catedra = getIdCatedra($this,$em);
+
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+
         //$userManager = $this->get('fos_user.user_manager');
         if (isset($catedra)) {
         $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
 
         return $this->render('cursos/index.html.twig', array(
-            'cursos' => $cursos,
+            'cursos' => $cursos, 'secretario' => $secretario,
         ));
         } else {
             return $this->render('cursos/index.html.twig', array(

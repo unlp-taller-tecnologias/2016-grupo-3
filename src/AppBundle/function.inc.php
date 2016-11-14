@@ -10,3 +10,12 @@ function getIdCatedra($controller,$em) {
         }
         return $catedra;
 }
+
+function esSecretario($controller){
+	$catedra = $controller->getUser()->getCatedra();
+	if(null != $catedra){
+		return false;
+	}else{
+		return true;
+	}
+}

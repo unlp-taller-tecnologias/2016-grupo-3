@@ -27,7 +27,7 @@ class UserType extends  AbstractType
             ->add('username', null, array('label' => 'Usuario'))
             ->add('nombre', null, array('attr' => array('required' => true)))
             ->add('apellido', null, array('attr' => array('required' => true)))
-            ->add('dni', null, array('attr' => array('required' => true)))
+            ->add('dni', null, array('label' => 'D.N.I.', 'attr' => array('required' => true)))
             ->add('cargo', null, array('attr' => array('required' => true)))
             ->add('password', 'repeated', array(
                 'type' => 'password',
