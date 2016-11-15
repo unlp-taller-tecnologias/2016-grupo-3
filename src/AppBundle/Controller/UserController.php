@@ -24,13 +24,18 @@ class UserController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        if (esSecretario($this)) {
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+            $em = $this->getDoctrine()->getManager();
 
-        return $this->render('user/index.html.twig', array(
-            'users' => $users,
-        ));
+            $users = $em->getRepository('AppBundle:User')->findAll();
+
+            return $this->render('user/index.html.twig', array(
+                'users' => $users,
+            ));
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
+        }
     }
 
     /**
@@ -41,28 +46,32 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-        //$user = new User();
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->createUser();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
-        $form->handleRequest($request);
-        
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPlainPassword($user->getPassword());
-            $user->setEnabled(1);
-            $em = $this->getDoctrine()->getManager();
-            $user->setCatedra($em->getRepository('AppBundle:Catedras')->findOneById(
-                $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())));
-            //todo lo de ariba te trae la catedra solo si es secretario.
-            $userManager->updateUser($user);
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+        if( esSecretario($this)){
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $userManager->createUser();
+            $form = $this->createForm('AppBundle\Form\UserType', $user);
+            $form->handleRequest($request);
+            
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setPlainPassword($user->getPassword());
+                $user->setEnabled(1);
+                $em = $this->getDoctrine()->getManager();
+                $user->setCatedra($em->getRepository('AppBundle:Catedras')->findOneById(
+                    $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())));
+                //todo lo de ariba te trae la catedra solo si es secretario.
+                $userManager->updateUser($user);
+                return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            }
+
+            return $this->render('user/new.html.twig', array(
+                'user' => $user,
+                'form' => $form->createView(),
+            ));
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
         }
-
-        return $this->render('user/new.html.twig', array(
-            'user' => $user,
-            'form' => $form->createView(),
-        ));
     }
 
     /**
@@ -73,12 +82,16 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
+        if( esSecretario($this)){    
+            $deleteForm = $this->createDeleteForm($user);
 
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            return $this->render('user/show.html.twig', array(
+                'user' => $user,
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
+        }
     }
 
     /**
@@ -89,23 +102,27 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
-        $editForm->handleRequest($request);
+        if (esSecretario($this)){
+            $deleteForm = $this->createDeleteForm($user);
+            $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+            $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
 
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+                return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+            }
+
+            return $this->render('user/edit.html.twig', array(
+                'user' => $user,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
         }
-
-        return $this->render('user/edit.html.twig', array(
-            'user' => $user,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**
@@ -116,16 +133,19 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
-        $form = $this->createDeleteForm($user);
-        $form->handleRequest($request);
+        if(esSecretario($this)){
+            $form = $this->createDeleteForm($user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($user);
+                $em->flush();
+            }
+            return $this->redirectToRoute('user_index');
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
         }
-
-        return $this->redirectToRoute('user_index');
     }
 
     /**
