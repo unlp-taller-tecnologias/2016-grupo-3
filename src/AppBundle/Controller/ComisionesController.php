@@ -36,7 +36,7 @@ class ComisionesController extends Controller
             } else $comisiones = '';   
         } else $comisiones = '';
         return $this->render('comisiones/index.html.twig', array(
-            'comisiones' => $comisiones,
+            'comisiones' => $comisiones,'cursada' => $_GET['id']
             ));
     }
 

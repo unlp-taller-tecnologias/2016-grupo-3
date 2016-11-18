@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="col-md-2"><a href="{{ path('parcial_index') }}" class="btn btn-primary">Parciales de la cursada</a></br></div>
-    <div class="col-md-2"> <a href="{{ path('clase_index') }}" class="btn btn-primary">Clases de la cursada</a></div>
+    <div class="col-md-2"> <a href="{{ path('clase_index') }}?id={{ cursada }}" class="btn btn-primary">Clases de la cursada</a></div>
     <div class="col-md-2"></div>
     <div class="col-md-2"></div>
       <div class="col-md-2"></div>

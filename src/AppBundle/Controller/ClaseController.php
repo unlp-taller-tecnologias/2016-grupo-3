@@ -25,12 +25,24 @@ class ClaseController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $clases = $em->getRepository('AppBundle:Clase')->findAll();
-
+        //$catedra = $this->getUser()->getCatedra();
+        $catedra = getIdCatedra($this,$em);
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+        if (isset($catedra)) {    
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
+             if (isset($curso)) {
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
+                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($_GET['id']);
+                       } else $clases = '';
+            } else $clases = '';   
+        } else $clases = '';
         return $this->render('clase/index.html.twig', array(
-            'clases' => $clases,
-        ));
+            'clases' => $clases, 'secretario' => $secretario
+            ));
     }
 
     /**
@@ -47,6 +59,9 @@ class ClaseController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $catedra = getIdCatedra($this,$em); //buscamos la clase del usuario activo
+            $clase->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
+                           array('id' => 'DESC')));
             $em->persist($clase);
             $em->flush();
 

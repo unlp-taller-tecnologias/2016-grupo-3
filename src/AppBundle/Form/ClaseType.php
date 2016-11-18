@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ClaseType extends AbstractType
 {
@@ -19,8 +20,14 @@ class ClaseType extends AbstractType
             ->add('descripcion')
             ->add('requerida')
             ->add('fecha', 'datetime')
-            ->add('estado')
-            ->add('cursada')
+            ->add('estado', ChoiceType::class, 
+            		array( 'choices'  => array (
+            			'pendiente' => 'pendiente',
+    					'suspendida' => 'suspendida',
+        				'finalizada' => 'finalizada', 
+        				)
+    				)
+            	)
         ;
     }
     

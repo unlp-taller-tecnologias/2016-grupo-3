@@ -42,7 +42,7 @@ class CursosController extends Controller
         ));
         } else {
             return $this->render('cursos/index.html.twig', array(
-            'cursos' => ''));
+            'cursos' => '', 'secretario' => $secretario,));
         }
     }
 

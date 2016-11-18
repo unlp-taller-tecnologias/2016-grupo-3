@@ -18,7 +18,14 @@ class InstanciaParcialType extends AbstractType
             ->add('nombre')
             ->add('descripcion')
             ->add('fecha', 'datetime')
-            ->add('estado')
+            ->add('estado', ChoiceType::class, 
+                    array( 'choices'  => array (
+                        'pendiente' => 'pendiente',
+                        'suspendido' => 'suspendido',
+                        'finalizado' => 'finalizado', 
+                        )
+                    )
+                )
             ->add('parcial')
         ;
     }
