@@ -15,20 +15,13 @@ class UserType extends  AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /*$builder
-            ->add('username')
-            ->add('password','password')
-            ->add('nombre')
-            ->add('apellido')
-            ->add('dni')
-            ->add('cargo')
-        ;*/
+
         $builder
-            ->add('username', null, array('label' => 'Usuario'))
-            ->add('nombre', null, array('attr' => array('required' => true)))
-            ->add('apellido', null, array('attr' => array('required' => true)))
-            ->add('dni', null, array('label' => 'D.N.I.', 'attr' => array('required' => true)))
-            ->add('cargo', null, array('attr' => array('required' => true)))
+            ->add('username', null, array('label' => 'Usuario','attr' => array('minlength' => '3', 'maxlength' => '15')))
+            ->add('nombre',null, array('attr' => array('minlength' => '3', 'maxlength' => '30')))
+            ->add('apellido',null, array('attr' => array('minlength' => '3', 'maxlength' => '30')))
+            ->add('dni', null, array('label' => 'D.N.I.'))
+            ->add('cargo',null, array('attr' => array('minlength' => '3', 'maxlength' => '30')))
             ->add('password', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => 'Las contraseñas deben coincidir.',

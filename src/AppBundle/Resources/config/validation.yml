@@ -1,0 +1,11 @@
+# src/AppBundle/Resources/config/validation.yml
+AppBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank: {message: El nombre de usuario es obligatorio.}
+            - Length:
+                min : "3"
+                max : "15"
+                minMessage : "El nombre de usuario debe tener al menos 3 letras"
+                maxMessage: "El nombre de usuario puede tener a lo sumo 15 letras"
+    

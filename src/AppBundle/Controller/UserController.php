@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User controller.
@@ -27,8 +28,8 @@ class UserController extends Controller
         if (esSecretario($this)) {
 
             $em = $this->getDoctrine()->getManager();
-
-            $users = $em->getRepository('AppBundle:User')->findAll();
+            $catedra = getIdCatedra($this,$em);
+            $users = $em->getRepository('AppBundle:User')->findByCatedra($catedra);
 
             return $this->render('user/index.html.twig', array(
                 'users' => $users,
@@ -55,14 +56,24 @@ class UserController extends Controller
             
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $user->setPlainPassword($user->getPassword());
-                $user->setEnabled(1);
                 $em = $this->getDoctrine()->getManager();
-                $user->setCatedra($em->getRepository('AppBundle:Catedras')->findOneById(
-                    $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())));
-                //todo lo de ariba te trae la catedra solo si es secretario.
-                $userManager->updateUser($user);
-                return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+                //Valida que el nombre de usuario no exista
+                $existe = $em->getRepository('AppBundle:User')->findOneByUsername($user->getUsername());
+                if (empty($existe)) {
+                    $user->setPlainPassword($user->getPassword());
+                    $user->setEnabled(1);
+                    
+                    $user->setCatedra($em->getRepository('AppBundle:Catedras')->findOneById(
+                        $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())));
+                    //todo lo de ariba te trae la catedra solo si es secretario.
+                    $userManager->updateUser($user);
+                    return $this->redirectToRoute('user_index', array('id' => $user->getId()));
+                }else{
+                    return $this->render('user/new.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView(),
+                ));
+                }
             }
 
             return $this->render('user/new.html.twig', array(
@@ -109,10 +120,20 @@ class UserController extends Controller
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-
-                return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
+                //Valida que el nombre de usuario no exista
+                $existe = $em->getRepository('AppBundle:User')->findOneByUsername($user->getUsername());
+                if (empty($existe)){
+                    $user->setPlainPassword($user->getPassword()); 
+                    $em->persist($user);
+                    $em->flush();
+                    return $this->redirectToRoute('user_index');
+                }elseif ($existe->getId() == $user->getId()) {
+                    $user->setPlainPassword($user->getPassword());               
+                    $em->persist($user);
+                    $em->flush();                    
+                    return $this->redirectToRoute('user_index');
+                }
+                return $this->redirectToRoute('user_edit',array('id' => $user->getId()));
             }
 
             return $this->render('user/edit.html.twig', array(

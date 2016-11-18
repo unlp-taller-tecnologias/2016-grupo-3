@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -26,21 +27,43 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="apellido", type="string", length=255, nullable=true)
+     * @ORM\Column(name="apellido", type="string", length=50, nullable=true)
+     * @Assert\NotNull(message = "El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "3",
+     *              max = "30",
+     *              minMessage = "El apellido debe tener 3 letras por lo menos.",
+     *              maxMessage = "El apellido no puede tener mas de 30 letras."
+     *)
      */
     private $apellido;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
+     * @Assert\NotNull(message="El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "3",
+     *              max = "30",
+     *              minMessage = "El nombre debe tener 3 letras por lo menos.",
+     *              maxMessage = "El nombre no puede tener mas de 30 letras."
+     *)
      */
     private $nombre;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="dni", type="string", length=15, nullable=true)
+     * @ORM\Column(name="dni", type="integer", length=8, nullable=true)
+     * @Assert\NotNull(message= "El DNI debe tener 8 digitos")
+     * @Assert\Length(
+     *          min = "8",
+     *          max = "8",
+     *          minMessage = "El DNI debe tener 8 digitos",
+     *          maxMessage = "El DNI no puede tener mas de 8 digitos",  
+     *          exactMessage = "El DNI debe tener 8 digitos."             
+     *)
      */
     private $dni;
 
@@ -48,6 +71,13 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="cargo", type="string", length=50, nullable=true)
+     * @Assert\NotNull(message="El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "3",
+     *              max = "30",
+     *              minMessage = "El cargo debe tener 3 letras por lo menos.",
+     *              maxMessage = "El cargo no puede tener mas de 30 letras."
+     *)
      */
     private $cargo;
 
