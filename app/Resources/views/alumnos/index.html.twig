@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+                  <a href="{{ path('clase_index', { 'id': cursos.id }) }}" class="btn btn-primary"> Registro de Asistencias</a>
+               <a href="{{ path('parcial_index', { 'id': cursos.id }) }}" class="btn btn-primary"> Registro de Parcial</a>
+                <a class="btn btn-primary" href="{{ path('user_new') }}">Reporte Asitencias Comision</a>
+                <a class="btn btn-primary" href="{{ path('user_new') }}">Reporte Notas Comision</a>
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Listado de Alumnos</caption>
         <thead>
