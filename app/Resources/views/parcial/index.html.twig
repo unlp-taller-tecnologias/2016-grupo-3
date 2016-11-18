@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-      <div class="col-md-2"><a href="{{ path('parcial_new') }}" class="btn btn-primary">Nuevo Parcial de Cursada</a></br></div>
+      <div class="col-md-2"><a href="{{ path('parcial_new') }}?id={{ cursada }}" class="btn btn-primary">Nuevo Parcial de Cursada</a></br></div>
     <div class="col-md-2"> </div>
     <div class="col-md-2"></div>
     <div class="col-md-2"></div>
@@ -11,28 +11,23 @@
          <caption>Lista de Parciales</caption>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Actions</th>
+                {% if secretario == true %}
+                <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for parcial in parcials %}
             <tr>
-                <td><a href="{{ path('parcial_show', { 'id': parcial.id }) }}">{{ parcial.id }}</a></td>
-                <td>{{ parcial.nombre }}</td>
+                <td><a href="{{ path('instanciaparcial_index', { 'id': parcial.id }) }}">{{ parcial.nombre }}</a></td>
                 <td>{{ parcial.descripcion }}</td>
+                {% if secretario == true %}
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('parcial_show', { 'id': parcial.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('parcial_edit', { 'id': parcial.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('parcial_edit', { 'id': parcial.id }) }}">editar</a>
                 </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

@@ -12,9 +12,6 @@
         <input type="submit" value="Create" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('clase_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('clase_index') }}?id={{ cursada }}">Regresar</a>
+
 {% endblock body %}

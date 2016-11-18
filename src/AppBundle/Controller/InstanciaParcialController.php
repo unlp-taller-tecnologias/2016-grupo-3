@@ -26,10 +26,28 @@ class InstanciaParcialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $instanciaParcials = $em->getRepository('AppBundle:InstanciaParcial')->findAll();
+        $catedra = getIdCatedra($this,$em);
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+        if(isset($_GET['id'])) $id = $_GET['id'];
+        else $id = 0;
+        if (isset($catedra)) {    
+            $parcial = $em->getRepository('AppBundle:Parcial')->findOneById($id);
+             if (isset($parcial)) {
+                $curso = $parcial->getCursada();
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
+                           $instanciaParcials = $em->getRepository('AppBundle:InstanciaParcial')->findByParcial($id);
+                       } else $instanciaParcials = '';
+            } else $instanciaParcials = '';   
+        } else $instanciaParcials = '';
 
         return $this->render('instanciaparcial/index.html.twig', array(
             'instanciaParcials' => $instanciaParcials,
+            'secretario' => $secretario,
+            'parcial' => $id
         ));
     }
 
@@ -44,9 +62,12 @@ class InstanciaParcialController extends Controller
         $instanciaParcial = new InstanciaParcial();
         $form = $this->createForm('AppBundle\Form\InstanciaParcialType', $instanciaParcial);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        if(isset($_GET['id'])) $id = $_GET['id'];
+        else $id = 0;
+        if ($form->isSubmitted() && $form->isValid() && $id != 0) {
             $em = $this->getDoctrine()->getManager();
+            $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
+            $instanciaParcial->setParcial($em->getRepository('AppBundle:Parcial')->findOneById($id));
             $em->persist($instanciaParcial);
             $em->flush();
 
@@ -56,6 +77,7 @@ class InstanciaParcialController extends Controller
         return $this->render('instanciaparcial/new.html.twig', array(
             'instanciaParcial' => $instanciaParcial,
             'form' => $form->createView(),
+            'parcial' => $id
         ));
     }
 

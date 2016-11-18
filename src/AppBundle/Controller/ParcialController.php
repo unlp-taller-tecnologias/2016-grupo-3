@@ -22,15 +22,31 @@ class ParcialController extends Controller
      * @Route("/", name="parcial_index")
      * @Method("GET")
      */
+    
+
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $parcials = $em->getRepository('AppBundle:Parcial')->findAll();
-
+        //$catedra = $this->getUser()->getCatedra();
+        $catedra = getIdCatedra($this,$em);
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+        if(isset($_GET['id'])) $id = $_GET['id']; 
+        else $id = 0;
+        if (isset($catedra)) {    
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($id);
+             if (isset($curso)) {
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
+                           $parcials = $em->getRepository('AppBundle:Parcial')->findByCursada($id);
+                       } else $parcials = '';
+            } else $parcials = '';   
+        } else $parcials = '';
         return $this->render('parcial/index.html.twig', array(
-            'parcials' => $parcials,
-        ));
+            'parcials' => $parcials, 'secretario' => $secretario, 'cursada' => $id
+            ));
     }
 
     /**
@@ -44,9 +60,13 @@ class ParcialController extends Controller
         $parcial = new Parcial();
         $form = $this->createForm('AppBundle\Form\ParcialType', $parcial);
         $form->handleRequest($request);
-
+        if(isset($_GET['id'])) $id = $_GET['id'];
+        else $id = 0;
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
+            $parcial->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
+                           array('id' => 'DESC')));
             $em->persist($parcial);
             $em->flush();
 
@@ -56,6 +76,7 @@ class ParcialController extends Controller
         return $this->render('parcial/new.html.twig', array(
             'parcial' => $parcial,
             'form' => $form->createView(),
+            'cursada' => $id
         ));
     }
 

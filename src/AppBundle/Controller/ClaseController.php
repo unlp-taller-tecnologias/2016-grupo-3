@@ -32,16 +32,18 @@ class ClaseController extends Controller
         }else{
             $secretario=false;
         }
+        if(isset($_GET['id'])) $id = $_GET['id'];
+        else $id = 0;
         if (isset($catedra)) {    
-            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($id);
              if (isset($curso)) {
                 if ( $curso->getIdcatedra()->getId() == $catedra ){
-                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($_GET['id']);
+                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($id);
                        } else $clases = '';
             } else $clases = '';   
         } else $clases = '';
         return $this->render('clase/index.html.twig', array(
-            'clases' => $clases, 'secretario' => $secretario
+            'clases' => $clases, 'secretario' => $secretario, 'cursada' => $id
             ));
     }
 
@@ -56,10 +58,11 @@ class ClaseController extends Controller
         $clase = new Clase();
         $form = $this->createForm('AppBundle\Form\ClaseType', $clase);
         $form->handleRequest($request);
-
+        if(isset($_GET['id'])) $id = $_GET['id'];
+        else $id = 0;
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $catedra = getIdCatedra($this,$em); //buscamos la clase del usuario activo
+            $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
             $clase->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
                            array('id' => 'DESC')));
             $em->persist($clase);
@@ -71,6 +74,7 @@ class ClaseController extends Controller
         return $this->render('clase/new.html.twig', array(
             'clase' => $clase,
             'form' => $form->createView(),
+            'cursada' => $id
         ));
     }
 

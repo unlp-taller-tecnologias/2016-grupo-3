@@ -17,7 +17,6 @@ class ParcialType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion')
-            ->add('cursada')
         ;
     }
     
