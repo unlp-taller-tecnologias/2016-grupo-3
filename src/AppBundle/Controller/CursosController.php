@@ -39,7 +39,7 @@ class CursosController extends Controller
 
         return $this->render('cursos/index.html.twig', array(
             'cursos' => $cursos, 'secretario' => $secretario,
-        ));
+        'catedra' => $catedra));
         } else {
             return $this->render('cursos/index.html.twig', array(
             'cursos' => '', 'secretario' => $secretario,));

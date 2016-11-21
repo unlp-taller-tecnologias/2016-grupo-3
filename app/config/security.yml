@@ -45,3 +45,4 @@ security:
         - { path: ^/clase, role: ROLE_USER }
         - { path: ^/instanciaparcial, role: ROLE_USER }
         - { path: ^/catedras, role: ROLE_SUPER_SUPER_ADMIN }
+        - { path: ^/reporteAsistencia, role: ROLE_USER }
