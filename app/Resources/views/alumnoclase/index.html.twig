@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>AlumnoClase list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Observacion</th>
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for alumnoClase in alumnoClases %}
+            <tr>
+                <td><a href="{{ path('alumnoclase_show', { 'id': alumnoClase.id }) }}">{{ alumnoClase.id }}</a></td>
+                <td>{{ alumnoClase.observacion }}</td>
+                <td>{{ alumnoClase.estado }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('alumnoclase_show', { 'id': alumnoClase.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('alumnoclase_edit', { 'id': alumnoClase.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('alumnoclase_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

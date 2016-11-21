@@ -35,9 +35,8 @@ class AlumnosController extends Controller
                        } else $inscriptos = '';
             } else $inscriptos = '';   
         } else $inscriptos = '';
-        //var_dump($alumnos);die();
         return $this->render('alumnos/index.html.twig', array(
-            'inscriptos' => $inscriptos,
+            'inscriptos' => $inscriptos, 'id' => $_GET['id']
             ));
     }
 

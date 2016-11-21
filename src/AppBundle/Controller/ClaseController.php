@@ -32,19 +32,31 @@ class ClaseController extends Controller
         }else{
             $secretario=false;
         }
-        if(isset($_GET['id'])) $id = $_GET['id'];
-        else $id = 0;
+        if(isset($_GET['idCursada'])) $idCursada = $_GET['idCursada'];
+        else 
+            if (isset($_GET['idComision'])) {
+                $idCursada = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['idComision']);
+                $idCursada = $idCursada->getIdCurso();
+                $idCursada = $idCursada->getId();
+            }
+                else $idCursada = 0;
         if (isset($catedra)) {    
-            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($id);
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($idCursada);
              if (isset($curso)) {
                 if ( $curso->getIdcatedra()->getId() == $catedra ){
-                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($id);
+                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($idCursada);
                        } else $clases = '';
             } else $clases = '';   
         } else $clases = '';
-        return $this->render('clase/index.html.twig', array(
-            'clases' => $clases, 'secretario' => $secretario, 'cursada' => $id
+        if (isset($_GET['idComision'])) {
+        return $this->render('clase/indexAsistencias.html.twig', array(
+            'clases' => $clases, 'cursada' => $idCursada, 'idComision' => $_GET['idComision']
             ));
+        }else{
+            return $this->render('clase/index.html.twig', array(
+            'clases' => $clases, 'secretario' => $secretario, 'cursada' => $idCursada
+            ));
+        }
     }
 
     /**

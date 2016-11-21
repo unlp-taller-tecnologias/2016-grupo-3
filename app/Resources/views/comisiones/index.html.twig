@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('parcial_index') }}?id={{ cursada }}" class="btn btn-primary">Parciales de la cursada</a>
-    <a href="{{ path('clase_index') }}?id={{ cursada }}" class="btn btn-primary">Clases de la cursada</a>
+    <a href="{{ path('parcial_index') }}?idCursada={{ cursada }}" class="btn btn-primary">Parciales de la cursada</a>
+    <a href="{{ path('clase_index') }}?idCursada={{ cursada }}" class="btn btn-primary">Clases de la cursada</a>
     <a class="btn btn-primary" href="{{ path('user_new') }}">Reporte Asistencias Cursos</a>
    <a class="btn btn-primary" href="{{ path('user_new') }}">Reporte Notas Cursos</a>
 

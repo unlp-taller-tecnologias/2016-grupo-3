@@ -43,6 +43,10 @@ class Clase
      */
     protected $cursada;
 
+    public function __toString() {
+        return $this->nombre;
+    }
+
     /**
      * Constructor
      */

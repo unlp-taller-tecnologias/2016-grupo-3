@@ -94,6 +94,10 @@ class Alumnos
      */
     protected $instanciasParciales;
 
+    public function __toString() {
+        return $this->nombre;
+    }
+
     public function __construct() {
         $this->clases = new \Doctrine\Common\Collections\ArrayCollection();
         $this->instanciasParciales = new \Doctrine\Common\Collections\ArrayCollection();
