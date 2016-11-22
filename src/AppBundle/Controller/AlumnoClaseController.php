@@ -42,11 +42,7 @@ class AlumnoClaseController extends Controller
                 }
 
             }
-            foreach ($asistencias as $asistencia) {
-                echo $asistencia['alumno'];
-                echo $asistencia['asistencia'];
-            }
-            
+           
             $clase = $em->getRepository('AppBundle:Clase')->findOneById($_GET['idClase']);
 
             return $this->render('alumnoclase/index.html.twig', array(
