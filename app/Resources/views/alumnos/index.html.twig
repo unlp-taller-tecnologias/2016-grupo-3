@@ -1,17 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<<<<<<< HEAD
-                <a href="{{ path('clase_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Asistencias</a>
-                <a href="{{ path('parcial_index', { 'idParcial': id }) }}" class="btn btn-primary"> Registro de Parcial</a>
-                <a class="btn btn-primary" href="{{ path('reporteAsistencia_index') }}?idComision={{ comision }}">Reporte Asitencias Comision</a>
-                <a class="btn btn-primary" href="{{ path('reporteNotas_index') }}?idComision={{ comision }}">Reporte Notas Comision</a>
-=======
+
                   <a href="{{ path('clase_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Asistencias</a>
                <a href="{{ path('parcial_index', { 'idParcial': id }) }}" class="btn btn-primary"> Registro de Parcial</a>
                 <a class="btn btn-primary" href="{{ path('reporteAsistencia_index') }}?comision={{ id }}">Reporte Asitencias Comision</a>
                 <a class="btn btn-primary" href="{{ path('reporteNotas_index') }}?comision={{ id }}">Reporte Notas Comision</a>
->>>>>>> ab8b08f03d6b1a96d7edfa0ccb6f0b454db410bd
+
 
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Listado de Alumnos</caption>
