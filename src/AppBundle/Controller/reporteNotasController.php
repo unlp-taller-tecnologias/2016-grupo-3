@@ -30,8 +30,7 @@ class reporteNotasController extends Controller
       }elseif (isset($_GET['comision'])) {
           $id=$_GET['comision'];
       }
-        return $this->render('reporteAsistencia/index.html.twig',array('id'=>$id)
-            );
+        return $this->render('reporteAsistencia/index.html.twig',array('id'=>$id));
     }
 
  
