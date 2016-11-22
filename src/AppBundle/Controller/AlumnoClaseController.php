@@ -36,9 +36,9 @@ class AlumnoClaseController extends Controller
                 $alumno = $alumno->getIdAlumno();
                 $asistencia = encontrarUnaAsistenciaByAlumnoAndClase($em,$alumno->getId(),$_GET['idClase']);
                 if ($asistencia == null) {
-                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>"n/a", "observacion"=> "asistencia no pasada todavia" ));
+                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>"n/a", "observacion"=> "asistencia no pasada todavia","id"=>"0" ));
                 } else { 
-                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>$asistencia[0]->getEstado(),"observacion"=>$asistencia[0]->getObservacion()));
+                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>$asistencia[0]->getEstado(),"observacion"=>$asistencia[0]->getObservacion(),"id"=>$asistencia[0]->getId()));
                 }
 
             }
@@ -53,6 +53,48 @@ class AlumnoClaseController extends Controller
         }
     }
 
+    /**
+     * Updates a group of AlumnoClase entity.
+     *
+     * @Route("/update", name="alumnoclase_update")
+     * @Method({"POST"})
+     */
+    public function updateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idsAlumno = $_POST['idAlumno'];
+        $clase = $_POST['idClase'];
+        if (isset($_POST['seleccionado'])) {
+            $seleccionados = $_POST['seleccionado'];
+            $idsAsistencia = $_POST['idAsistencia'];
+            $estados = $_POST['estado'];
+            $observaciones = $_POST['observacion'];
+            $clase = $em->getRepository('AppBundle:Clase')->findOneById($clase);
+            foreach ($seleccionados as $seleccionado) { 
+                $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById($idsAlumno[$seleccionado]);
+                if ($idsAsistencia[$seleccionado] == 0) {
+                    $alumnoClase = new AlumnoClase();
+                    $alumnoClase->setAlumnos($alumno);
+                    $alumnoClase->setClases($clase);
+                } else {
+                    $alumnoClase = $em->getRepository('AppBundle:AlumnoClase')->findOneById($idsAsistencia[$seleccionado]);
+                }
+                $alumnoClase->setObservacion($observaciones[$seleccionado]);
+                $alumnoClase->setEstado($estados[$seleccionado]);
+                $em->persist($alumnoClase);
+            }
+            $em->flush();
+        }
+        else {
+            //Busqueda de datos para el redirect
+            $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById(reset($idsAlumno));
+            $clase = $em->getRepository('AppBundle:Clase')->findOneById($clase);
+        }
+        $cursada = $clase->getCursada();
+        $inscripto = encontrarUnInscriptoByAlumnoAndClase($em, $alumno->getId(), $cursada->getId());
+        $comision = $inscripto[0]->getIdcomision()->getId();
+        return $this->redirect($this->generateUrl('clase_index', array('idComision' => $comision)));
+    }
     /**
      * Creates a new AlumnoClase entity.
      *
