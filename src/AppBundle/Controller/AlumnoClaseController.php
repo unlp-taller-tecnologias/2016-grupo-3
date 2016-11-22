@@ -26,11 +26,35 @@ class AlumnoClaseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $alumnoClases = $em->getRepository('AppBundle:AlumnoClase')->findAll();
+        if(isset($_GET['idClase'])){ 
 
-        return $this->render('alumnoclase/index.html.twig', array(
-            'alumnoClases' => $alumnoClases,
-        ));
+            $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['idComision']);
+            $curso = $comision->getIdcurso();
+            $alumnos = $comision->getAlumnos();
+            $asistencias = array();
+            foreach ($alumnos as $alumno) {
+                $alumno = $alumno->getIdAlumno();
+                $asistencia = encontrarUnaAsistenciaByAlumnoAndClase($em,$alumno->getId(),$_GET['idClase']);
+                if ($asistencia == null) {
+                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>"n/a", "observacion"=> "asistencia no pasada todavia" ));
+                } else { 
+                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>$asistencia[0]->getEstado(),"observacion"=>$asistencia[0]->getObservacion()));
+                }
+
+            }
+            foreach ($asistencias as $asistencia) {
+                echo $asistencia['alumno'];
+                echo $asistencia['asistencia'];
+            }
+            
+            $clase = $em->getRepository('AppBundle:Clase')->findOneById($_GET['idClase']);
+
+            return $this->render('alumnoclase/index.html.twig', array(
+                'asistencias' => $asistencias, 'clase' => $clase, "idComision" => $_GET['idComision']
+            ));
+        } else {
+            return $this->render('error/error.html.twig');
+        }
     }
 
     /**

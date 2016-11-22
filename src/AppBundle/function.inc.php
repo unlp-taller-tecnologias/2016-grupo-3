@@ -19,3 +19,15 @@ function esSecretario($controller){
 		return true;
 	}
 }
+
+function encontrarUnaAsistenciaByAlumnoAndClase($em, $idAlumno, $idClase)
+{
+    $q = $em->createQuery(
+        "SELECT ac 
+        FROM AppBundle:AlumnoClase ac 
+        WHERE ac.alumnos = :idAlumno AND ac.clases = :idClase");
+
+    $q->setParameter("idAlumno",$idAlumno);
+    $q->setParameter("idClase",$idClase);
+    return $q->getResult();
+}

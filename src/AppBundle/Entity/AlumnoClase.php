@@ -34,9 +34,6 @@ class AlumnoClase
      */
     protected $clases;
 
-
-    
-
     /**
      * Get id
      *
