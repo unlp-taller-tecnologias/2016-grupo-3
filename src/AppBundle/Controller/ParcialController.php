@@ -34,7 +34,7 @@ class ParcialController extends Controller
         }else{
             $secretario=false;
         }
-        if(isset($_GET['id'])) $id = $_GET['id']; 
+        if(isset($_GET['idCursada'])) $id = $_GET['idCursada']; 
         else $id = 0;
         if (isset($catedra)) {    
             $curso = $em->getRepository('AppBundle:Cursos')->findOneById($id);
@@ -70,7 +70,7 @@ class ParcialController extends Controller
             $em->persist($parcial);
             $em->flush();
 
-            return $this->redirectToRoute('parcial_show', array('id' => $parcial->getId()));
+            return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
         }
 
         return $this->render('parcial/new.html.twig', array(
@@ -113,7 +113,7 @@ class ParcialController extends Controller
             $em->persist($parcial);
             $em->flush();
 
-            return $this->redirectToRoute('parcial_edit', array('id' => $parcial->getId()));
+            return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
         }
 
         return $this->render('parcial/edit.html.twig', array(
@@ -140,7 +140,7 @@ class ParcialController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('parcial_index');
+        return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
     }
 
     /**

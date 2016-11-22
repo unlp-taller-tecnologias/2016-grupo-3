@@ -25,7 +25,7 @@ class AlumnosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $catedra = getIdcatedra($this,$em);
+        $catedra = getIdCatedra($this,$em);
         if (isset($catedra)) {    
             $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id']);
              if (isset($comision)) {

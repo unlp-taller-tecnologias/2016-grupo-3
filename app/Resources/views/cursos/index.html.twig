@@ -3,8 +3,8 @@
 {% block body %}
 
     {% if secretario == true %}
-        <a class="btn btn-primary" href="{{ path('user_new') }}">Nuevo Docente</a>
-     
+        <a class="btn btn-primary" href="{{ path('user_new') }}">Nuevo Docente</a> 
+        <a class="btn btn-primary" href="{{ path('user_index') }}">Listado de docentes</a>      
     {% endif %}
    <a class="btn btn-primary" href="{{ path('reporteAsistencia_index') }}?catedra={{ catedra }}">Reporte Asistencias Catedra</a>
      <a class="btn btn-primary" href="{{ path('reporteNotas_index') }}?catedra={{ catedra }}">Reporte Notas Catedra</a>
