@@ -3,16 +3,42 @@
 {% block body %}
 
 
-{{ id }}
+
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>REPORTE</caption>
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Nombre y Apellido</th>
+                 <th>Curso</th>
+                  <th>Comision</th>
+                    {% for clases in clases %}
+                     <th>{{ clases.nombre }}</th>
+                    {% endfor %}
+                    <th>Cantidad de clases</th>
+                      <th>Porcentaje Presentes</th>
+
             </tr>
         </thead>
         <tbody>
-      
+          
+       {% for alumnos_asistencia in alumnos_asistencia %}
+            <tr>
+                <td>{{ alumnos_asistencia.alumno.nombre }},{{ alumnos_asistencia.alumno.apellido }}</td>
+                <td>{{ alumnos_asistencia.curso.nombre }}</td>
+                <td>{{ alumnos_asistencia.comision.nombre }}</td>
+                
+                     {% set cant = 0 %}
+                 {% for asist in alumnos_asistencia.asistencias %}
+                   {% if asist.asistencia == "presente" %}
+                        {% set cant = cant + 1 %}
+                    {% endif %}
+                   <td> {{asist.asistencia}}</td>
+                {% endfor %}
+               
+                <td>{{ alumnos_asistencia.asistencias|length }}</td>
+                <td>{{ cant * 100 / alumnos_asistencia.asistencias|length }}%</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
