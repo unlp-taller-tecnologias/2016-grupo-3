@@ -8,7 +8,6 @@
         <caption>Listado de Asistencias de la clase {{ clase.nombre }}</caption>
         <thead>
             <tr>
-                <th width="20px">Actualizar</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Legajo</th>
@@ -20,7 +19,6 @@
         {% for asistencia in asistencias %}
             <tr>
                 <input type="number" name="idAlumno[{{ asistencia.alumno.id }}]" value="{{ asistencia.alumno.id }}" hidden/>
-                <td><input type="checkbox" name="seleccionado[]" value="{{ asistencia.alumno.id }}"><br></td>
                 <input type="number" name="idAsistencia[{{ asistencia.alumno.id }}]" value="{{ asistencia.id }}" hidden/>
                 
                 <td>{{ asistencia.alumno.nombre }}</td>
@@ -46,7 +44,7 @@
     </table>
         <input type="submit" value="Actualizar seleccionadas">
     </form>
-
-    <a href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
+    <br/>
+    <a class="btn btn-primary" href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
 
 {% endblock %}

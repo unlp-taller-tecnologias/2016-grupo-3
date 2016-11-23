@@ -23,7 +23,7 @@ class InstanciaParcial
     /** @ORM\Column(type="string", length=200) **/
     protected $descripcion;
 
-    /** @ORM\Column(type="datetime") **/
+    /** @ORM\Column(type="date") **/
     protected $fecha;
     
      /** @ORM\Column(type="string", columnDefinition="ENUM('pendiente', 'suspendido','finalizado')") */
@@ -111,7 +111,7 @@ class InstanciaParcial
     /**
      * Set fecha
      *
-     * @param \DateTime $fecha
+     * @param \Date $fecha
      * @return InstanciaParcial
      */
     public function setFecha($fecha)
@@ -124,7 +124,7 @@ class InstanciaParcial
     /**
      * Get fecha
      *
-     * @return \DateTime 
+     * @return \Date 
      */
     public function getFecha()
     {

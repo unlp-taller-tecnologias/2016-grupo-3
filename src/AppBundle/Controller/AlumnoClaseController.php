@@ -64,32 +64,26 @@ class AlumnoClaseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idsAlumno = $_POST['idAlumno'];
         $clase = $_POST['idClase'];
-        if (isset($_POST['seleccionado'])) {
-            $seleccionados = $_POST['seleccionado'];
-            $idsAsistencia = $_POST['idAsistencia'];
-            $estados = $_POST['estado'];
-            $observaciones = $_POST['observacion'];
-            $clase = $em->getRepository('AppBundle:Clase')->findOneById($clase);
-            foreach ($seleccionados as $seleccionado) { 
-                $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById($idsAlumno[$seleccionado]);
-                if ($idsAsistencia[$seleccionado] == 0) {
+        $idsAsistencia = $_POST['idAsistencia'];
+        $estados = $_POST['estado'];
+        $observaciones = $_POST['observacion'];
+        $clase = $em->getRepository('AppBundle:Clase')->findOneById($clase);
+            foreach ($idsAlumno as $idAlumno) { 
+                $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById($idAlumno);
+                if ($idsAsistencia[$idAlumno] == 0) {
                     $alumnoClase = new AlumnoClase();
                     $alumnoClase->setAlumnos($alumno);
                     $alumnoClase->setClases($clase);
                 } else {
-                    $alumnoClase = $em->getRepository('AppBundle:AlumnoClase')->findOneById($idsAsistencia[$seleccionado]);
+                    $alumnoClase = $em->getRepository('AppBundle:AlumnoClase')->findOneById($idsAsistencia[$idAlumno]);
                 }
-                $alumnoClase->setObservacion($observaciones[$seleccionado]);
-                $alumnoClase->setEstado($estados[$seleccionado]);
-                $em->persist($alumnoClase);
+                if ($estados[$idAlumno] != 'Seleccionar') {
+                    $alumnoClase->setObservacion($observaciones[$idAlumno]);
+                    $alumnoClase->setEstado($estados[$idAlumno]);
+                    $em->persist($alumnoClase);
+                }
             }
             $em->flush();
-        }
-        else {
-            //Busqueda de datos para el redirect
-            $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById(reset($idsAlumno));
-            $clase = $em->getRepository('AppBundle:Clase')->findOneById($clase);
-        }
         $cursada = $clase->getCursada();
         $inscripto = encontrarUnInscriptoByAlumnoAndClase($em, $alumno->getId(), $cursada->getId());
         $comision = $inscripto[0]->getIdcomision()->getId();
