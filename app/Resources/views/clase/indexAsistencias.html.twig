@@ -8,7 +8,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Fecha</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de finalizacion</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -17,12 +18,14 @@
             <tr>
                 <td><a href="{{ path('alumnoclase_index') }}?idComision={{ idComision }}&idClase={{ clase.id }}">{{ clase.nombre }}</a></td>
                 <td>{{ clase.descripcion }}</td>
-                <td>{% if clase.fecha %}{{ clase.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if clase.fechaInicio %}{{ clase.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if clase.fechaFin %}{{ clase.fechaFin|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ clase.estado }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+    <a class="btn btn-primary" href="{{ path('alumnos_index') }}?id={{ idComision }}">Volver</a>
   
 {% endblock %}

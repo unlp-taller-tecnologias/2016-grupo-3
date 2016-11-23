@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <form action="{{ path('alumnoclase_index') }}update" method="post">
+        <input type="number" name="idInstanciaP" value="{{instancia.id}}" hidden/>
+
+    <table class="table table-striped table-bordered" cellspacing="0" width="100%">     
+        <caption>Listado de Notas de la Instancia {{instancia.nombre}}</caption>
+        <thead>
+            <tr>
+                <th width="20px">Actualizar</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Legajo</th>
+                <th>Nota</th>
+                <th>Condicion</th>
+                <th>Estado</th>
+                <th>Observacion</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nota in notas %}
+            <tr>
+                <input type="number" name="idAlumno[{{ nota.alumno.id }}]" value="{{ nota.alumno.id }}" hidden/>
+
+                <td><input type="checkbox" name="seleccionado[]" value="{{ nota.alumno.id }}"><br></td>
+
+                <input type="number" name="idAsistencia[{{ nota.alumno.id }}]" value="{{ nota.id }}" hidden/>
+
+                <td>{{ nota.alumno.nombre }}</td>
+                <td>{{ nota.alumno.apellido }}</td>
+                <td>{{ nota.alumno.legajo }}</td>
+
+                <td>
+                    <input type="text" size="20" name="nota[{{ nota.alumno.id }}]" placeholder="Ingrese una nota" value="{{ nota.nota}}">
+                </td>
+                <td>
+                    <select name="condicion[{{ nota.alumno.id }}]">
+                        {% for condicion in ["Seleccionar","aprobado","desaprobado","no aplica"] %}
+                            {% if condicion == nota.condicion %}
+                                <option selected value={{condicion}}>{{ condicion }}</option>
+                            {% else %}
+                                <option value={{condicion}}>{{ condicion }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+
+                <td>
+                    <select name="estado[{{ nota.alumno.id }}]">
+                        {% for estado in ["Seleccionar","presente","ausente","justificado"] %}
+                            {% if estado == nota.estado %}
+                                <option selected value={{estado}}>{{ estado }}</option>
+                            {% else %}
+                                <option value={{estado}}>{{ estado }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+
+                <td>
+                    <input type="text" size="60" name="observacion[{{ nota.alumno.id }}]" placeholder="Ingrese una observacion" value="{{ nota.observacion}}">
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <input type="submit" value="Actualizar seleccionadas">
+    </form>
+
+    <a href="{{ path('instanciaparcial_index', { 'idComision': idComision }) }}">Volver</a>
+
+{% endblock %}

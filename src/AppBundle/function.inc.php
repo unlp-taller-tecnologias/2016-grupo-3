@@ -43,3 +43,15 @@ function encontrarUnInscriptoByAlumnoAndClase($em, $idAlumno, $idCurso)
     $q->setParameter("idCurso",$idCurso);
     return $q->getResult();
 }
+
+function encontrarUnaNotaByAlumnoAndInstancia($em, $idAlumno, $idInstancia)
+{
+    $q = $em->createQuery(
+        "SELECT ap 
+        FROM AppBundle:AlumnosParcial ap 
+        WHERE ap.alumnos = :idAlumno AND ap.parciales = :idInstancia");
+
+    $q->setParameter("idAlumno",$idAlumno);
+    $q->setParameter("idInstancia",$idInstancia);
+    return $q->getResult();
+}

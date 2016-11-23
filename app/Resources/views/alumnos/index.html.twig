@@ -3,13 +3,13 @@
 {% block body %}
 
                   <a href="{{ path('clase_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Asistencias</a>
-               <a href="{{ path('parcial_index', { 'idParcial': id }) }}" class="btn btn-primary"> Registro de Parcial</a>
+               <a href="{{ path('parcial_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Notas</a>
                 <a class="btn btn-primary" href="{{ path('reporteAsistencia_index') }}?comision={{ id }}">Reporte Asitencias Comision</a>
                 <a class="btn btn-primary" href="{{ path('reporteNotas_index') }}?comision={{ id }}">Reporte Notas Comision</a>
 
 
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <caption>Listado de Alumnos</caption>
+        <caption>Alumnos de la comision {{nombreComision}}</caption>
         <thead>
             <tr>
                 <th>Legajo</th>
@@ -24,7 +24,7 @@
         <tbody>
         {% for inscripto in inscriptos %}
             <tr>
-                <td><a href="{{ path('alumnos_show', { 'id': inscripto.idAlumno.id }) }}">{{ inscripto.idAlumno.legajo }}</a></td>
+                <td>{{ inscripto.idAlumno.legajo }}</a></td>
                 <td>{{ inscripto.idAlumno.apellido }}</td>
                 <td>{{ inscripto.idAlumno.nombre }}</td>
                 <td>{{ inscripto.idAlumno.dni }}</td>
@@ -36,5 +36,6 @@
         </tbody>
     </table>
 
+    <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ idCurso }}">Volver</a>
     
 {% endblock %}

@@ -34,19 +34,34 @@ class ParcialController extends Controller
         }else{
             $secretario=false;
         }
-        if(isset($_GET['idCursada'])) $id = $_GET['idCursada']; 
-        else $id = 0;
+        if(isset($_GET['idCursada'])) $idCursada = $_GET['idCursada']; 
+        else 
+            if (isset($_GET['idComision'])) {
+                $idCursada = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['idComision']);
+                $idCursada = $idCursada->getIdCurso();
+                $idCursada = $idCursada->getId();
+            }
+            else $idCursada = 0;
+
         if (isset($catedra)) {    
-            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($id);
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($idCursada);
              if (isset($curso)) {
                 if ( $curso->getIdcatedra()->getId() == $catedra ){
-                           $parcials = $em->getRepository('AppBundle:Parcial')->findByCursada($id);
+                           $parcials = $em->getRepository('AppBundle:Parcial')->findByCursada($idCursada);
                        } else $parcials = '';
             } else $parcials = '';   
         } else $parcials = '';
-        return $this->render('parcial/index.html.twig', array(
-            'parcials' => $parcials, 'secretario' => $secretario, 'cursada' => $id
+        if (isset($_GET['idComision'])) {
+            return $this->render('parcial/indexNotas.html.twig', array(
+                'parcials' => $parcials, 'cursada' => $idCursada, 'idComision' => $_GET['idComision']
+                ));
+        }else{
+            return $this->render('parcial/index.html.twig', array(
+            'parcials' => $parcials, 'secretario' => $secretario, 'cursada' => $idCursada
             ));
+        }
+
+        
     }
 
     /**

@@ -26,6 +26,8 @@ class AlumnosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $catedra = getIdCatedra($this,$em);
+        $nombreComision=$em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id'])->getNombre();
+        $idCurso=$em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id'])->getIdcurso()->getId();
         if (isset($catedra)) {    
             $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['id']);
              if (isset($comision)) {
@@ -36,7 +38,7 @@ class AlumnosController extends Controller
             } else $inscriptos = '';   
         } else $inscriptos = '';
         return $this->render('alumnos/index.html.twig', array(
-            'inscriptos' => $inscriptos,'id'=>$_GET['id'],
+            'inscriptos' => $inscriptos,'id'=>$_GET['id'],'nombreComision' => $nombreComision, 'idCurso' => $idCurso
             ));
     }
 

@@ -58,11 +58,10 @@ class User extends BaseUser
      * @ORM\Column(name="dni", type="integer", length=8, nullable=true)
      * @Assert\NotNull(message= "El DNI debe tener 8 digitos")
      * @Assert\Length(
-     *          min = "8",
+     *          min = "7",
      *          max = "8",
      *          minMessage = "El DNI debe tener 8 digitos",
-     *          maxMessage = "El DNI no puede tener mas de 8 digitos",  
-     *          exactMessage = "El DNI debe tener 8 digitos."             
+     *          maxMessage = "El DNI no puede tener mas de 8 digitos",   
      *)
      */
     private $dni;

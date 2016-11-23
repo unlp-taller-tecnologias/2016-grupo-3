@@ -5,9 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class InstanciaParcialType extends AbstractType
+class AlumnosParcialType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,16 +16,11 @@ class InstanciaParcialType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('descripcion')
-            ->add('fecha', 'date')
-            ->add('estado', ChoiceType::class, 
-                    array( 'choices'  => array (
-                        'pendiente' => 'pendiente',
-                        'suspendido' => 'suspendido',
-                        'finalizado' => 'finalizado', 
-                        )
-                    )
-                )
+            ->add('observacion')
+            ->add('nota')
+            ->add('estado')
+            ->add('alumnos')
+            ->add('parciales')
         ;
     }
     
@@ -36,7 +30,7 @@ class InstanciaParcialType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\InstanciaParcial'
+            'data_class' => 'AppBundle\Entity\AlumnosParcial'
         ));
     }
 }
