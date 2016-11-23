@@ -25,7 +25,7 @@
             <a href="{{ path('parcial_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('parcial_edit', { 'id': parcial.id }) }}">Edit</a>
+            <a href="{{ path('parcial_edit', { 'idParcial': parcial.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

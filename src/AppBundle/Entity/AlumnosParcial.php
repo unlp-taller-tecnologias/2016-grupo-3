@@ -16,17 +16,17 @@ class AlumnosParcial
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=50) **/
-    protected $nombre;
-
     /** @ORM\Column(type="string", length=200) **/
     protected $observacion;
 
-    /** @ORM\Column(type="string", length=50) **/
+    /** @ORM\Column(type="string", length=50, nullable = true) **/
     protected $nota;
     
      /** @ORM\Column(type="string", columnDefinition="ENUM('ausente', 'presente','justificado')") */
     private $estado;
+
+    /** @ORM\Column(type="string", columnDefinition="ENUM('aprobado', 'desaprobado', 'no aplica')") */
+    private $condicion;
 
     /**
      * @ORM\ManyToOne(targetEntity="Alumnos", inversedBy="instanciasParciales")
@@ -49,29 +49,6 @@ class AlumnosParcial
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     * @return AlumnosParcial
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-    
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
     }
 
     /**
@@ -187,5 +164,28 @@ class AlumnosParcial
     public function getParciales()
     {
         return $this->parciales;
+    }
+
+    /**
+     * Set condicion
+     *
+     * @param string $condicion
+     * @return AlumnosParcial
+     */
+    public function setCondicion($condicion)
+    {
+        $this->condicion = $condicion;
+    
+        return $this;
+    }
+
+    /**
+     * Get condicion
+     *
+     * @return string 
+     */
+    public function getCondicion()
+    {
+        return $this->condicion;
     }
 }

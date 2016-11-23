@@ -11,6 +11,7 @@
                 <th width="20px">Actualizar</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Legajo</th>
                 <th>Estado</th>
                 <th>Observacion</th>
             </tr>
@@ -24,6 +25,7 @@
                 
                 <td>{{ asistencia.alumno.nombre }}</td>
                 <td>{{ asistencia.alumno.apellido }}</td>
+                <td>{{ asistencia.alumno.legajo }}</td>
                 <td>
                     <select name="estado[{{ asistencia.alumno.id }}]">
                         {% for estado in ["Seleccionar","presente","ausente","justificado"] %}
@@ -45,9 +47,6 @@
         <input type="submit" value="Actualizar seleccionadas">
     </form>
 
-    <ul>
-        <li>
-            <a href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
-        </li>
-    </ul>
+    <a href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
+    
 {% endblock %}
