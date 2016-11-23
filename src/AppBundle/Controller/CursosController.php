@@ -32,14 +32,14 @@ class CursosController extends Controller
         }else{
             $secretario=false;
         }
-
+        $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
         //$userManager = $this->get('fos_user.user_manager');
         if (isset($catedra)) {
-        $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
+            $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
 
-        return $this->render('cursos/index.html.twig', array(
-            'cursos' => $cursos, 'secretario' => $secretario,
-        'catedra' => $catedra));
+            return $this->render('cursos/index.html.twig', array(
+                'cursos' => $cursos, 'secretario' => $secretario,
+            'nombreCatedra' => $nombreCatedra));
         } else {
             return $this->render('cursos/index.html.twig', array(
             'cursos' => '', 'secretario' => $secretario,));

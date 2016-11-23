@@ -29,10 +29,10 @@ class UserController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $catedra = getIdCatedra($this,$em);
+            $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
             $users = $em->getRepository('AppBundle:User')->findByCatedra($catedra);
-
             return $this->render('user/index.html.twig', array(
-                'users' => $users,
+                'users' => $users,'nombreCatedra' => $nombreCatedra
             ));
         }else{
             return $this->redirect($this->generateUrl('cursos_index'));

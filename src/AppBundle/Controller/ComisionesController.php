@@ -27,6 +27,9 @@ class ComisionesController extends Controller
         $em = $this->getDoctrine()->getManager();
         //$catedra = $this->getUser()->getCatedra();
         $catedra = getIdCatedra($this,$em);
+        $nombreCurso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
+        //print($nombreCurso);
+        //die();
         if (isset($catedra)) {    
             $curso = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['id']);
              if (isset($curso)) {
@@ -36,7 +39,7 @@ class ComisionesController extends Controller
             } else $comisiones = '';   
         } else $comisiones = '';
         return $this->render('comisiones/index.html.twig', array(
-            'comisiones' => $comisiones,'cursada' => $_GET['id']
+            'comisiones' => $comisiones,'cursada' => $_GET['id'], 'nombreCurso' => $nombreCurso
             ));
     }
 
