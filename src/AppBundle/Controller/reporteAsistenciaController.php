@@ -28,7 +28,7 @@ class reporteAsistenciaController extends Controller
         //BUSCA POR UN CURSO EN PARTICULAR
             $id=$_GET['curso'];
 
-           //   var_dump($id);die();
+           
             $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['curso']);
             $clases = $cursos->getClases();
           
@@ -57,7 +57,8 @@ class reporteAsistenciaController extends Controller
                $alumnos_asistencia[]=  (array("alumno"=>$alumno,"curso"=>$cursos,"comision"=>$comision,"asistencias"=>$asistencias));  
               $asistencias = "";
             }
-           // var_dump($alumnos_asistencia[0]); die();
+           // var_dump($cursos->getNombre()); die();
+           $titulo=$cursos->getNombre();
 
             }
 
@@ -90,10 +91,10 @@ class reporteAsistenciaController extends Controller
                $alumnos_asistencia[]=  (array("alumno"=>$alumno,"curso"=>$cursos,"comision"=>$comision,"asistencias"=>$asistencias));  
               $asistencias = "";
             }
-           // var_dump($alumnos_asistencia[0]); die();
-
+           // var_dump($comision->getNombre()); die();
+           $titulo=$comision->getNombre();
          }
-    return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases));
+    return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'titulo'=>$titulo));
   }
 
  

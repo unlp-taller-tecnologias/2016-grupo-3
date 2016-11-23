@@ -13,10 +13,10 @@
 <div class="container-fluid">
 
     
-<header>
- {% block header %}
+  <header>
+   {% block header %}
 
- <a href="backend.php"><img src="{{ asset('bundles/framework/images/logo_medicina_2.png') }}" style="width:400px;" class="img-responsive" alt="" /></a>
+      <a href="backend.php"><img src="{{ asset('bundles/framework/images/logo_medicina_2.png') }}" style="width:400px;" class="img-responsive" alt="" /></a>
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -32,15 +32,14 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
     
-        <li ><a href="{{ asset('')}}">Home</a></li>
-        <li ><a href="{{ asset('/cursos')}}"> CURSOS</a>  </li>
+                <li ><a href="{{ asset('')}}">Home</a></li>
+                <li ><a href="{{ asset('/cursos')}}"> CURSOS</a>  </li>
      
 
-          </li>
          
-    </ul>
+              </ul>
 
-<ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
               <li class='salir'><a  href="{{ asset('/logout')}}" >Cerrar Sesion</a></li>
             </ul> 
           </div><!--/.nav-collapse -->
@@ -52,18 +51,19 @@
  </header>
 
 
-       <div class="jumbotron">     
-                {% block body %}
+<div class="jumbotron">     
+           {% block body %}
    
- <div class="col-md-4"></div>
-    <div class="col-md-4 " style="margin-top: 100px;"  id="form" >
-          <h4 style="border-bottom: 1px solid #c5c5c5;">
-            <img src="{{ asset('bundles/framework/images/encabezado.png') }}" class="img-responsive" style="margin:0 auto;width:450px;"/>
-            <p style="margin: 0 auto; font-family: 'Dosis'; "></p>
-          </h4>
-    </div>
-<div class="col-md-4"></div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4 " style="margin-top: 100px;"  id="form" >
+                        <h4 style="border-bottom: 1px solid #c5c5c5;">
+                          <img src="{{ asset('bundles/framework/images/encabezado.png') }}" class="img-responsive" style="margin:0 auto;width:450px;"/>
+                          <p style="margin: 0 auto; font-family: 'Dosis'; "></p>
+                        </h4>
+                  </div>
+                <div class="col-md-4"></div>
         {% endblock body%}
+       
         </div>
 </div>
     

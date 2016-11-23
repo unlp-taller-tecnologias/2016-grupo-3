@@ -23,14 +23,14 @@ class reporteNotasController extends Controller
      */
     public function indexAction()
     {
-      if (isset($_GET['catedra'])) {
-         $id=$_GET['catedra'];
-      }elseif (isset($_GET['curso'])) {
+      if (isset($_GET['curso'])) {
          $id=$_GET['curso'];
       }elseif (isset($_GET['comision'])) {
+        //mostrar todas las notas del parcual
           $id=$_GET['comision'];
+
       }
-        return $this->render('reporteAsistencia/index.html.twig',array('id'=>$id));
+        return $this->render('reporteNotas/index.html.twig',array('id'=>$id));
     }
 
  
