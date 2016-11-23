@@ -19,7 +19,8 @@ class ClaseType extends AbstractType
             ->add('nombre')
             ->add('descripcion')
             ->add('requerida')
-            ->add('fecha', 'datetime')
+            ->add('fechaInicio', 'date')
+            ->add('fechaFin', 'date')
             ->add('estado', ChoiceType::class, 
             		array( 'choices'  => array (
             			'pendiente' => 'pendiente',

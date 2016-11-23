@@ -27,8 +27,11 @@ class Clase
     /** @ORM\Column(type="boolean") **/
     protected $requerida=true;
 
-    /** @ORM\Column(type="datetime") **/
-    protected $fecha;
+    /** @ORM\Column(type="date") **/
+    protected $fechaInicio;
+
+    /** @ORM\Column(type="date") **/
+    protected $fechaFin;
     
      /** @ORM\Column(type="string", columnDefinition="ENUM('pendiente', 'suspendida','finalizada')") */
     private $estado;
@@ -137,26 +140,49 @@ class Clase
     }
 
     /**
-     * Set fecha
+     * Set fechaInicio
      *
      * @param \DateTime $fecha
      * @return Clase
      */
-    public function setFecha($fecha)
+    public function setFechaInicio($fechaInicio)
     {
-        $this->fecha = $fecha;
+        $this->fechaInicio = $fechaInicio;
     
         return $this;
     }
 
     /**
-     * Get fecha
+     * Get fechaInicio
      *
      * @return \DateTime 
      */
-    public function getFecha()
+    public function getFechaInicio()
     {
-        return $this->fecha;
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fecha
+     * @return Clase
+     */
+    public function setFechaFin($fechaFin)
+    {
+        $this->fechaFin = $fechaFin;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime 
+     */
+    public function getFechaFin()
+    {
+        return $this->fechaFin;
     }
 
     /**

@@ -11,7 +11,8 @@
                 <th>Nombre</th>
                 <th>Descripcion</th>
                 <th>Es requerida?</th>
-                <th>Fecha</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de finalizacion</th>
                 <th>Estado</th>
                 {% if secretario == true %}
                 <th>Acciones</th>
@@ -24,7 +25,8 @@
                 <td>{{ clase.nombre }}</td>
                 <td>{{ clase.descripcion }}</td>
                 <td>{% if clase.requerida %}Si{% else %}No{% endif %}</td>
-                <td>{% if clase.fecha %}{{ clase.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if clase.fechaInicio %}{{ clase.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if clase.fechaFin %}{{ clase.fechaFin|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ clase.estado }}</td>
                 {% if secretario == true %}
                 <td>
