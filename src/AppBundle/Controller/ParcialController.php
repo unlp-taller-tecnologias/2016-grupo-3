@@ -42,6 +42,7 @@ class ParcialController extends Controller
                 $idCursada = $idCursada->getId();
             }
             else $idCursada = 0;
+
         if (isset($catedra)) {    
             $curso = $em->getRepository('AppBundle:Cursos')->findOneById($idCursada);
              if (isset($curso)) {
