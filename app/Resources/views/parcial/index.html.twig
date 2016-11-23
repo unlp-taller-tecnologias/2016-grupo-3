@@ -21,7 +21,7 @@
         <tbody>
         {% for parcial in parcials %}
             <tr>
-                <td><a href="{{ path('instanciaparcial_index', { 'id': parcial.id }) }}">{{ parcial.nombre }}</a></td>
+                <td><a href="{{ path('instanciaparcial_index', { 'idParcial': parcial.id }) }}">{{ parcial.nombre }}</a></td>
                 <td>{{ parcial.descripcion }}</td>
                 {% if secretario == true %}
                 <td>

@@ -3,7 +3,7 @@
 {% block body %}
 
                   <a href="{{ path('clase_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Asistencias</a>
-               <a href="{{ path('parcial_index', { 'idParcial': id }) }}" class="btn btn-primary"> Registro de Parcial</a>
+               <a href="{{ path('parcial_index', { 'idComision': id }) }}" class="btn btn-primary"> Registro de Notas</a>
                 <a class="btn btn-primary" href="{{ path('reporteAsistencia_index') }}?comision={{ id }}">Reporte Asitencias Comision</a>
                 <a class="btn btn-primary" href="{{ path('reporteNotas_index') }}?comision={{ id }}">Reporte Notas Comision</a>
 

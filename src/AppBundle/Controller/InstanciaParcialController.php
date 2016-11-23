@@ -32,23 +32,32 @@ class InstanciaParcialController extends Controller
         }else{
             $secretario=false;
         }
-        if(isset($_GET['id'])) $id = $_GET['id'];
-        else $id = 0;
+
+        if(isset($_GET['idParcial'])) $idParcial = $_GET['idParcial'];
+        else $idParcial = 0;
+
         if (isset($catedra)) {    
-            $parcial = $em->getRepository('AppBundle:Parcial')->findOneById($id);
+            $parcial = $em->getRepository('AppBundle:Parcial')->findOneById($idParcial);
              if (isset($parcial)) {
                 $curso = $parcial->getCursada();
                 if ( $curso->getIdcatedra()->getId() == $catedra ){
-                           $instanciaParcials = $em->getRepository('AppBundle:InstanciaParcial')->findByParcial($id);
+                           $instanciaParcials = $em->getRepository('AppBundle:InstanciaParcial')->findByParcial($idParcial);
                        } else $instanciaParcials = '';
             } else $instanciaParcials = '';   
         } else $instanciaParcials = '';
 
-        return $this->render('instanciaparcial/index.html.twig', array(
-            'instanciaParcials' => $instanciaParcials,
-            'secretario' => $secretario,
-            'parcial' => $id
-        ));
+        if (isset($_GET['idComision'])) {
+            return $this->render('instanciaparcial/indexNotas.html.twig', array(
+                'instanciaParcials' => $instanciaParcials, 'parcial' => $idParcial, 'idComision' => $_GET['idComision']
+                ));
+        }else{
+            return $this->render('instanciaparcial/index.html.twig', array(
+                'instanciaParcials' => $instanciaParcials,
+                'secretario' => $secretario,
+                'parcial' => $idParcial
+            ));
+        }
+        
     }
 
     /**
@@ -62,12 +71,12 @@ class InstanciaParcialController extends Controller
         $instanciaParcial = new InstanciaParcial();
         $form = $this->createForm('AppBundle\Form\InstanciaParcialType', $instanciaParcial);
         $form->handleRequest($request);
-        if(isset($_GET['id'])) $id = $_GET['id'];
-        else $id = 0;
-        if ($form->isSubmitted() && $form->isValid() && $id != 0) {
+        if(isset($_GET['idParcial'])) $idParcial = $_GET['idParcial'];
+        else $idParcial = 0;
+        if ($form->isSubmitted() && $form->isValid() && $idParcial != 0) {
             $em = $this->getDoctrine()->getManager();
             $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
-            $instanciaParcial->setParcial($em->getRepository('AppBundle:Parcial')->findOneById($id));
+            $instanciaParcial->setParcial($em->getRepository('AppBundle:Parcial')->findOneById($idParcial));
             $em->persist($instanciaParcial);
             $em->flush();
 
@@ -77,7 +86,7 @@ class InstanciaParcialController extends Controller
         return $this->render('instanciaparcial/new.html.twig', array(
             'instanciaParcial' => $instanciaParcial,
             'form' => $form->createView(),
-            'parcial' => $id
+            'parcial' => $idParcial
         ));
     }
 

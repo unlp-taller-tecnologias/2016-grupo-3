@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <caption>Seleccione el parcial para el cual se desea registrar notas</caption>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parcial in parcials %}
+            <tr>
+                <td><a href="{{ path('instanciaparcial_index', { 'idParcial': parcial.id, 'idComision': idComision, 'idCursada': cursada}) }}">{{ parcial.nombre }}</a></td>
+                <td>{{ parcial.descripcion }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+  
+{% endblock %}
