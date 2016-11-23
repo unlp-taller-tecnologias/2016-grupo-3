@@ -38,7 +38,7 @@
                     </select>
                 </td>
                 <td>
-                    <textarea name="observacion[{{ asistencia.alumno.id }}]">{{ asistencia.observacion }}</textarea>
+                    <input type="text" size="60" name="observacion[{{ asistencia.alumno.id }}]" placeholder="Ingrese una observacion" value="{{ asistencia.observacion}}">
                 </td>
             </tr>
         {% endfor %}
@@ -48,5 +48,5 @@
     </form>
 
     <a href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
-    
+
 {% endblock %}

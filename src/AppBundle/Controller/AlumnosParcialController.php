@@ -38,8 +38,9 @@ class AlumnosParcialController extends Controller
                 if ($nota == null) {
                     $notas[] = (array(
                                 "alumno"=>$alumno,
-                                "nota"=>"n/a", 
-                                "observacion"=> "nota no pasada todavia",
+                                "estado"=>"n/a",
+                                "nota"=>"", 
+                                "observacion"=> "",
                                 "condicion"=>"n/a",
                                 "id"=>"0" )
                                 );

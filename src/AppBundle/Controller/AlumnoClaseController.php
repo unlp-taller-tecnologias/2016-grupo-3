@@ -36,7 +36,7 @@ class AlumnoClaseController extends Controller
                 $alumno = $alumno->getIdAlumno();
                 $asistencia = encontrarUnaAsistenciaByAlumnoAndClase($em,$alumno->getId(),$_GET['idClase']);
                 if ($asistencia == null) {
-                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>"n/a", "observacion"=> "asistencia no pasada todavia","id"=>"0" ));
+                    $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>"n/a", "observacion"=> "","id"=>"0" ));
                 } else { 
                     $asistencias[] = (array("alumno"=>$alumno,"asistencia"=>$asistencia[0]->getEstado(),"observacion"=>$asistencia[0]->getObservacion(),"id"=>$asistencia[0]->getId()));
                 }

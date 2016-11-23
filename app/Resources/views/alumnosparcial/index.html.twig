@@ -13,10 +13,10 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Legajo</th>
-                <th>Observacion</th>
                 <th>Nota</th>
                 <th>Condicion</th>
                 <th>Estado</th>
+                <th>Observacion</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,13 @@
 
                 <input type="number" name="idAsistencia[{{ nota.alumno.id }}]" value="{{ nota.id }}" hidden/>
 
-                <td>{{ nota.nota }}</td>
+                <td>{{ nota.alumno.nombre }}</td>
+                <td>{{ nota.alumno.apellido }}</td>
+                <td>{{ nota.alumno.legajo }}</td>
+
+                <td>
+                    <input type="text" size="20" name="nota[{{ nota.alumno.id }}]" placeholder="Ingrese una nota" value="{{ nota.nota}}">
+                </td>
                 <td>
                     <select name="condicion[{{ nota.alumno.id }}]">
                         {% for condicion in ["Seleccionar","aprobado","desaprobado","no aplica"] %}
@@ -54,7 +60,7 @@
                 </td>
 
                 <td>
-                    <textarea name="observacion[{{ nota.alumno.id }}]">{{ nota.observacion }}</textarea>
+                    <input type="text" size="60" name="observacion[{{ nota.alumno.id }}]" placeholder="Ingrese una observacion" value="{{ nota.observacion}}">
                 </td>
             </tr>
         {% endfor %}
@@ -64,5 +70,5 @@
     </form>
 
     <a href="{{ path('instanciaparcial_index', { 'idComision': idComision }) }}">Volver</a>
-    
+
 {% endblock %}
