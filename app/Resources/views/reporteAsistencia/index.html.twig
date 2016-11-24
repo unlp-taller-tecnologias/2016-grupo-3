@@ -41,5 +41,10 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {% if idCurso %}
+        <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ idCurso }}">Volver</a>
+    {% elseif idComision %}
+         <a class="btn btn-primary" href="{{ path('alumnos_index') }}?id={{ idComision }}">Volver</a>
+    {% endif %}
+    
 {% endblock %}

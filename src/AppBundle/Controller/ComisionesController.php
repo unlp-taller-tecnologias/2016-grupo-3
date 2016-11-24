@@ -68,6 +68,22 @@ class ComisionesController extends Controller
             'form' => $form->createView(),
         ));
     }
+ /**
+     * Finds and displays a Comisiones entity.
+     *
+     * @Route("/", name="buscar_alumno")
+     * @Method("POST")
+     */
+    public function buscarAlumno()
+    {
+
+        $em = $this->getDoctrine()->getManager();    
+        $alumnos = encontrarAlumnos($em,$_POST['nom'],$_POST['id_curso']);
+       // var_dump($alumnos);die();
+        $hola=var_dump($alumnos);
+       
+        return $this->render('comisiones/showAlumnos.html.twig',array('alumnos'=>$hola));
+    }
 
     /**
      * Finds and displays a Comisiones entity.

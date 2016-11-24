@@ -17,7 +17,7 @@
             <tr>
                 <td><a href="{{ path('notas_index') }}?idComision={{ idComision }}&idInstanciaP={{ instanciaParcial.id }}">{{ instanciaParcial.nombre }}</a></td>
                 <td>{{ instanciaParcial.descripcion }}</td>
-                <td>{% if instanciaParcial.fecha %}{{ instanciaParcial.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if instanciaParcial.fecha %}{{ instanciaParcial.fecha|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ instanciaParcial.estado }}</td>
             </tr>
         {% endfor %}

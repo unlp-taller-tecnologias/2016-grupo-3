@@ -62,6 +62,8 @@ class reporteAsistenciaController extends Controller
 
             }
 
+          $miCurso=$cursos->getId();
+
    }elseif (isset($_GET['comision'])) {
             //BUSCA POR UNA COMISION EN PARTICULAR
             $id=$_GET['comision'];
@@ -91,10 +93,21 @@ class reporteAsistenciaController extends Controller
                $alumnos_asistencia[]=  (array("alumno"=>$alumno,"curso"=>$cursos,"comision"=>$comision,"asistencias"=>$asistencias));  
               $asistencias = "";
             }
+
            // var_dump($comision->getNombre()); die();
            $titulo=$comision->getNombre();
          }
     return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'titulo'=>$titulo));
+           // var_dump($alumnos_asistencia[0]); die();
+            $miComision=$_GET['comision'];
+         }
+    //Este if evita que el sistema se rompa cuando esta en modo desarrollador
+    if (isset($miCurso)) {
+      $miComision='';
+    }else{
+      $miCurso='';
+    }
+    return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases, 'idCurso' => $miCurso,'idComision' => $miComision));
   }
 
  

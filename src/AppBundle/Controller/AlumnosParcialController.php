@@ -42,7 +42,7 @@ class AlumnosParcialController extends Controller
                                 "nota"=>"", 
                                 "observacion"=> "",
                                 "condicion"=>"n/a",
-                                "id"=>"0" )
+                                "idNota"=>"0" )
                                 );
                 } else { 
                     $notas[] = (array(
@@ -51,17 +51,58 @@ class AlumnosParcialController extends Controller
                                 "condicion"=>$nota[0]->getCondicion(),
                                 "observacion"=>$nota[0]->getObservacion(),
                                 "estado"=>$nota[0]->getEstado(),
-                                "id"=>$asistencia[0]->getId())
+                                "idNota"=>$nota[0]->getId())
                                 );
                 }
             }
             $instancia = $em->getRepository('AppBundle:InstanciaParcial')->findOneById($_GET['idInstanciaP']);
             return $this->render('alumnosparcial/index.html.twig', array(
-                'notas' => $notas, 'instancia' => $instancia, "idComision" => $_GET['idComision']
+                'notas' => $notas, 'instancia' => $instancia, "idComision" => $_GET['idComision'], 'idParcial' => $instancia->getParcial()->getId(), 'idCursada' => $curso->getId()
             ));
         } else {
             return $this->render('error/error.html.twig');
         }
+    }
+
+    /**
+     * Updates a group of AlumnoParcial entity.
+     *
+     * @Route("/update", name="alumnosparcial_update")
+     * @Method({"POST"})
+     */
+    public function updateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idInstanciaP = $_POST['idInstanciaP'];
+        $idComision = $_POST['idComision'];
+        $idsAlumno = $_POST['idAlumno'];
+        $idsNotas = $_POST['idNota'];
+        $notas = $_POST['nota'];
+        $condiciones = $_POST['condicion'];
+        $estados = $_POST['estado'];
+        $observaciones = $_POST['observacion'];
+        $instanciaParcial = $em->getRepository('AppBundle:InstanciaParcial')->findOneById($idInstanciaP);
+            foreach ($idsAlumno as $idAlumno) { 
+                $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById($idAlumno);
+                if ($idsNotas[$idAlumno] == 0) {
+                    $alumnoParcial = new AlumnosParcial();
+                    $alumnoParcial->setAlumnos($alumno);
+                    $alumnoParcial->setParciales($instanciaParcial);
+                } else {
+                    $alumnoParcial = $em->getRepository('AppBundle:AlumnosParcial')->findOneById($idsNotas[$idAlumno]);
+                }
+                if (($estados[$idAlumno] != 'Seleccionar')OR($condiciones[$idAlumno] != 'Seleccionar')) {
+                    $alumnoParcial->setNota($notas[$idAlumno]);
+                    $alumnoParcial->setObservacion($observaciones[$idAlumno]);
+                    $alumnoParcial->setEstado($estados[$idAlumno]);
+                    $alumnoParcial->setCondicion($condiciones[$idAlumno]);
+                    $em->persist($alumnoParcial);
+                }
+            }
+            $em->flush();
+            $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($idComision);
+            $cursada = $comision->getIdcurso();
+        return $this->redirect($this->generateUrl('instanciaparcial_index', array('idParcial' => $idInstanciaP, 'idComision' => $idComision, 'idCursada' => $cursada->getId())));
     }
 
     /**

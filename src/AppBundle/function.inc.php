@@ -55,3 +55,17 @@ function encontrarUnaNotaByAlumnoAndInstancia($em, $idAlumno, $idInstancia)
     $q->setParameter("idInstancia",$idInstancia);
     return $q->getResult();
 }
+
+function encontrarAlumnos($em,$nombre,$id_curso)
+{
+
+    $q = $em->createQuery(
+        "SELECT a
+        FROM AppBundle:Alumnos a
+        LEFT JOIN AppBundle:Inscriptos i ON (a.id = i.idAlumno)
+        WHERE i.idCurso = :id_curso AND a.nombre like :nombre");
+
+    $q->setParameter("id_curso",$id_curso);
+    $q->setParameter("nombre",$nombre);
+    return $q->getArrayResult();
+}
