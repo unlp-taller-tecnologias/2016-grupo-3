@@ -63,6 +63,55 @@ class InstanciaParcialController extends Controller
     }
 
     /**
+     * Updates a group of InstanciaParcial entity.
+     *
+     * @Route("/update", name="instanciaparcial_update")
+     * @Method({"POST"})
+     */
+    public function updateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $catedra = getIdCatedra($this,$em);
+
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+
+        if(isset($_POST['idParcial'])) $idParcial = $_POST['idParcial'];
+        else $idParcial = 0;
+
+        if (isset($_POST['estado'])) {
+            $estados = $_POST['estado'];
+            $idsInstancias = $_POST['idInstanciaP'];
+
+            foreach ($idsInstancias as $idInstancia) { 
+                $instancia = $em->getRepository('AppBundle:InstanciaParcial')->findOneById($idInstancia);
+                $instancia->setEstado($estados[$idInstancia]);
+                $em->persist($instancia);
+            }
+            $em->flush();
+        }
+        
+        if (isset($catedra)) {    
+            $parcial = $em->getRepository('AppBundle:Parcial')->findOneById($idParcial);
+             if (isset($parcial)) {
+                $curso = $parcial->getCursada();
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
+                           $instanciaParcials = $em->getRepository('AppBundle:InstanciaParcial')->findByParcial($idParcial);
+                       } else $instanciaParcials = '';
+            } else $instanciaParcials = '';   
+        } else $instanciaParcials = '';
+
+        return $this->render('instanciaparcial/index.html.twig', array(
+            'instanciaParcials' => $instanciaParcials,
+            'secretario' => $secretario,
+            'parcial' => $idParcial
+        ));
+    }
+
+    /**
      * Creates a new InstanciaParcial entity.
      *
      * @Route("/new", name="instanciaparcial_new")
