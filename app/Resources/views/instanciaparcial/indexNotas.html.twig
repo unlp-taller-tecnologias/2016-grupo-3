@@ -8,7 +8,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Fecha</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de finalizacion</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -17,7 +18,8 @@
             <tr>
                 <td><a href="{{ path('notas_index') }}?idComision={{ idComision }}&idInstanciaP={{ instanciaParcial.id }}">{{ instanciaParcial.nombre }}</a></td>
                 <td>{{ instanciaParcial.descripcion }}</td>
-                <td>{% if instanciaParcial.fecha %}{{ instanciaParcial.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if instanciaParcial.fechaInicio %}{{ instanciaParcial.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if instanciaParcial.fechaFin %}{{ instanciaParcial.fechaFin|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ instanciaParcial.estado }}</td>
             </tr>
         {% endfor %}

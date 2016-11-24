@@ -18,7 +18,8 @@ class InstanciaParcialType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion')
-            ->add('fecha', 'date')
+            ->add('fechaInicio', 'date')
+            ->add('fechaFin', 'date')
             ->add('estado', ChoiceType::class, 
                     array( 'choices'  => array (
                         'pendiente' => 'pendiente',

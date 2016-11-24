@@ -24,7 +24,10 @@ class InstanciaParcial
     protected $descripcion;
 
     /** @ORM\Column(type="date") **/
-    protected $fecha;
+    protected $fechaInicio;
+
+    /** @ORM\Column(type="date") **/
+    protected $fechaFin;
     
      /** @ORM\Column(type="string", columnDefinition="ENUM('pendiente', 'suspendido','finalizado')") */
     private $estado;
@@ -109,26 +112,49 @@ class InstanciaParcial
     }
 
     /**
-     * Set fecha
+     * Set fechaInicio
      *
-     * @param \Date $fecha
+     * @param \Date $fechaInicio
      * @return InstanciaParcial
      */
-    public function setFecha($fecha)
+    public function setFechaInicio($fechaInicio)
     {
-        $this->fecha = $fecha;
+        $this->fechaInicio = $fechaInicio;
     
         return $this;
     }
 
     /**
-     * Get fecha
+     * Get fechaInicio
      *
      * @return \Date 
      */
-    public function getFecha()
+    public function getFechaInicio()
     {
-        return $this->fecha;
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \Date $fechaFin
+     * @return InstanciaParcial
+     */
+    public function setFechaFin($fechaFin)
+    {
+        $this->fechaFin = $fechaFin;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \Date 
+     */
+    public function getFechaFin()
+    {
+        return $this->fechaFin;
     }
 
     /**

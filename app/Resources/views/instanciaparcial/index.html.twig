@@ -2,13 +2,18 @@
 
 {% block body %}
   <a href="{{ path('instanciaparcial_new') }}?id={{ parcial }}" class="btn btn-primary">Nueva Instancia de Parcial</a>
+
+  
+    <form action="{{ path('instanciaparcial_index') }}update" method="post">
+
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Lista Intancias de Parcial</caption>
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Fecha</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de finalizacion</th>
                 <th>Estado</th>
                 {% if secretario == true %}
                 <th>Acciones</th>
@@ -16,12 +21,32 @@
             </tr>
         </thead>
         <tbody>
+            
+        <input type="number" name="idParcial" value="{{parcial}}" hidden/>
         {% for instanciaParcial in instanciaParcials %}
+            <input type="number" name="idInstanciaP[]" value="{{instanciaParcial.id}}" hidden/>
             <tr>
                 <td>{{ instanciaParcial.nombre }}</td>
                 <td>{{ instanciaParcial.descripcion }}</td>
-                <td>{% if instanciaParcial.fecha %}{{ instanciaParcial.fecha|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ instanciaParcial.estado }}</td>
+                <td>{% if instanciaParcial.fechaInicio %}{{ instanciaParcial.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if instanciaParcial.fechaFin %}{{ instanciaParcial.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                
+                {% if secretario == true %}
+                    <td>
+                        <select name="estado[{{ instanciaParcial.id }}]">
+                            {% for estado in ["Seleccionar","pendiente","suspendido","finalizado"] %}
+                                {% if estado == instanciaParcial.estado %}
+                                    <option selected value={{estado}}>{{ estado }}</option>
+                                {% else %}
+                                    <option value={{estado}}>{{ estado }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                {% else %}
+                    <td>{{ instanciaParcial.estado }}</td>
+                {% endif %}
+
                 {% if secretario == true %}
                 <td>
                     <a href="{{ path('instanciaparcial_edit', { 'id': instanciaParcial.id }) }}">editar</a>
@@ -31,5 +56,9 @@
         {% endfor %}
         </tbody>
     </table>
+        {% if secretario == true %}
+            <input type="submit" value="Actualizar estados">
+        {% endif %}
+    </form>
     
 {% endblock %}

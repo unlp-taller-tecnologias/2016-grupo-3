@@ -60,6 +60,52 @@ class ClaseController extends Controller
     }
 
     /**
+     * Updates a group of Clase entity.
+     *
+     * @Route("/update", name="clase_update")
+     * @Method({"POST"})
+     */
+    public function updateAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $catedra = getIdCatedra($this,$em);
+
+        if (esSecretario($this)) {
+            $secretario=true;
+        }else{
+            $secretario=false;
+        }
+
+        if(isset($_POST['idCursada'])) $idCursada = $_POST['idCursada'];
+        else $idCursada = 0;
+
+        if (isset($_POST['estado'])) {
+            $estados = $_POST['estado'];
+            $idsClases = $_POST['idClase'];
+
+            foreach ($idsClases as $idClase) { 
+                $clase = $em->getRepository('AppBundle:Clase')->findOneById($idClase);
+                $clase->setEstado($estados[$idClase]);
+                $em->persist($clase);
+            }
+            $em->flush();
+        }
+
+        if (isset($catedra)) {    
+            $curso = $em->getRepository('AppBundle:Cursos')->findOneById($idCursada);
+             if (isset($curso)) {
+                if ( $curso->getIdcatedra()->getId() == $catedra ){
+                           $clases = $em->getRepository('AppBundle:Clase')->findByCursada($idCursada);
+                       } else $clases = '';
+            } else $clases = '';   
+        } else $clases = '';
+
+        return $this->render('clase/index.html.twig', array(
+            'clases' => $clases, 'secretario' => $secretario, 'cursada' => $idCursada
+            ));
+    }
+
+    /**
      * Creates a new Clase entity.
      *
      * @Route("/new", name="clase_new")

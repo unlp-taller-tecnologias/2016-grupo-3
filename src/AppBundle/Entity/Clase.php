@@ -142,7 +142,7 @@ class Clase
     /**
      * Set fechaInicio
      *
-     * @param \DateTime $fecha
+     * @param \Date $fechaInicio
      * @return Clase
      */
     public function setFechaInicio($fechaInicio)
@@ -155,7 +155,7 @@ class Clase
     /**
      * Get fechaInicio
      *
-     * @return \DateTime 
+     * @return \Date 
      */
     public function getFechaInicio()
     {
@@ -165,7 +165,7 @@ class Clase
     /**
      * Set fechaInicio
      *
-     * @param \DateTime $fecha
+     * @param \Date $fechaFin
      * @return Clase
      */
     public function setFechaFin($fechaFin)
@@ -178,7 +178,7 @@ class Clase
     /**
      * Get fechaInicio
      *
-     * @return \DateTime 
+     * @return \Date 
      */
     public function getFechaFin()
     {
