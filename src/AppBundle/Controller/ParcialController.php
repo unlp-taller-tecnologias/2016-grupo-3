@@ -70,28 +70,41 @@ class ParcialController extends Controller
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
-    {
-        $parcial = new Parcial();
-        $form = $this->createForm('AppBundle\Form\ParcialType', $parcial);
-        $form->handleRequest($request);
-        if(isset($_GET['id'])) $id = $_GET['id'];
-        else $id = 0;
-        if ($form->isSubmitted() && $form->isValid()) {
+    {   
+        if (esSecretario($this)) {
+            $parcial = new Parcial();
+            $form = $this->createForm('AppBundle\Form\ParcialType', $parcial);
+            $form->handleRequest($request);
+            if(isset($_GET['id'])) $id = $_GET['id'];
+            else $id = 0;
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
+                $parcial->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
+                               array('id' => 'DESC')));
+                $em->persist($parcial);
+                $em->flush();
+
+                return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
+            }
+
+            return $this->render('parcial/new.html.twig', array(
+                'parcial' => $parcial,
+                'form' => $form->createView(),
+                'cursada' => $id
+            ));
+        }else{
+            $secretario=false;
+
             $em = $this->getDoctrine()->getManager();
-            $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
-            $parcial->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
-                           array('id' => 'DESC')));
-            $em->persist($parcial);
-            $em->flush();
+            $catedra = getIdCatedra($this,$em);
 
-            return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
+            $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
+            $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
+            return $this->render('cursos/index.html.twig', array(
+                'cursos' => $cursos, 'secretario' => $secretario,
+            'nombreCatedra' => $nombreCatedra));
         }
-
-        return $this->render('parcial/new.html.twig', array(
-            'parcial' => $parcial,
-            'form' => $form->createView(),
-            'cursada' => $id
-        ));
     }
 
     /**
@@ -118,23 +131,36 @@ class ParcialController extends Controller
      */
     public function editAction(Request $request, Parcial $parcial)
     {
-        $deleteForm = $this->createDeleteForm($parcial);
-        $editForm = $this->createForm('AppBundle\Form\ParcialType', $parcial);
-        $editForm->handleRequest($request);
+        if (esSecretario($this)) {
+            $deleteForm = $this->createDeleteForm($parcial);
+            $editForm = $this->createForm('AppBundle\Form\ParcialType', $parcial);
+            $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($parcial);
+                $em->flush();
+
+                return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
+            }
+
+            return $this->render('parcial/edit.html.twig', array(
+                'parcial' => $parcial,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else{
+            $secretario=false;
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($parcial);
-            $em->flush();
+            $catedra = getIdCatedra($this,$em);
 
-            return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
+            $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
+            $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
+            return $this->render('cursos/index.html.twig', array(
+                'cursos' => $cursos, 'secretario' => $secretario,
+            'nombreCatedra' => $nombreCatedra));
         }
-
-        return $this->render('parcial/edit.html.twig', array(
-            'parcial' => $parcial,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**
