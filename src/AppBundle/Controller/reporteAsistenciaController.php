@@ -100,15 +100,19 @@ class reporteAsistenciaController extends Controller
     return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'titulo'=>$titulo));
            // var_dump($alumnos_asistencia[0]); die();
             $miComision=$_GET['comision'];
-         }
+         
     //Este if evita que el sistema se rompa cuando esta en modo desarrollador
-    if (isset($miCurso)) {
+  if (isset($miCurso)) {
       $miComision='';
     }else{
       $miCurso='';
     }
     return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases, 'idCurso' => $miCurso,'idComision' => $miComision));
+
   }
+
+
+
 
  
 }
