@@ -43,5 +43,10 @@
 
         </tbody>
     </table>
+    {% if cursada %}
+      <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ cursada }}">Volver123</a>
+    {% elseif comision %}
+      <a class="btn btn-primary" href="{{ path('alumnos_index') }}?id={{ comision }}">Volver321</a>
+    {% endif %}
 
 {% endblock %}

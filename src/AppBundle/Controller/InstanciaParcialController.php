@@ -51,10 +51,12 @@ class InstanciaParcialController extends Controller
                 'instanciaParcials' => $instanciaParcials, 'parcial' => $idParcial, 'idComision' => $_GET['idComision']
                 ));
         }else{
+            $idCursada = $em->getRepository('AppBundle:Parcial')->findOneById($idParcial)->getCursada()->getId();
             return $this->render('instanciaparcial/index.html.twig', array(
                 'instanciaParcials' => $instanciaParcials,
                 'secretario' => $secretario,
-                'parcial' => $idParcial
+                'parcial' => $idParcial,
+                'cursada' => $idCursada
             ));
         }
         

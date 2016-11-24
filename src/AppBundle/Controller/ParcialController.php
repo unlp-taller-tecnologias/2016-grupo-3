@@ -57,8 +57,7 @@ class ParcialController extends Controller
                 ));
         }else{
             return $this->render('parcial/index.html.twig', array(
-            'parcials' => $parcials, 'secretario' => $secretario, 'cursada' => $idCursada
-            ));
+            'parcials' => $parcials, 'secretario' => $secretario, 'cursada' => $idCursada));
         }
 
         

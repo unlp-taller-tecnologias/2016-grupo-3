@@ -27,6 +27,7 @@ class reporteNotasController extends Controller
       if (isset($_GET['curso'])) {
          //mostrar todas las notas de los parciales de todas las comisiones
          $id=$_GET['curso'];
+         $idCurso=$_GET['curso'];
       }elseif (isset($_GET['comision'])) {
         //mostrar todas las notas de los parciales de una comision
           $id=$_GET['comision'];
@@ -97,16 +98,16 @@ class reporteNotasController extends Controller
                $parcial_alumno="";
             }
             
-       
-
-
-
-
-
-
+            $idComision=$_GET['comision'];
       }
-           return $this->render('reporteNotas/index.html.twig', array(
-                'alumno_parciales' => $alumno_parciales, 'instancias' => $instancias, "parciales" => $parciales,'array_parcial_instancia'=>$array_parcial_instancia
+            if (isset($idCurso)) {
+              $idComision='';
+            }else{
+              $idCurso='';
+            }
+
+            return $this->render('reporteNotas/index.html.twig', array(
+                'alumno_parciales' => $alumno_parciales, 'instancias' => $instancias, "parciales" => $parciales,'array_parcial_instancia'=>$array_parcial_instancia,'cursada'=>$idCurso,'comision'=>$idComision
             ));
 
     }
