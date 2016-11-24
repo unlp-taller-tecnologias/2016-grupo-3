@@ -89,12 +89,13 @@ class reporteNotasController extends Controller
                         //$instancia = $em->getRepository('AppBundle:InstanciaParcial')->findOneById($_GET['idInstanciaP']);
                    }
                    
-                   $parcial_alumno[] = (array('parcial'=>$parcials,'instancia_parcial'=>$notas));
+                   $parcial_alumno[] = (array('parcial'=>$par,'instancia_parcial'=>$notas));
                    $notas="";
                  
                   }
                $alumno_parciales[] = (array('alumno'=>$alumno,'curso'=>$curso,'comision'=>$comision,'parcial_alumno'=>$parcial_alumno));
                $parcial_alumno="";
+               $titulo=$comision->getNombre();
             }
             
        
@@ -106,7 +107,7 @@ class reporteNotasController extends Controller
 
       }
            return $this->render('reporteNotas/index.html.twig', array(
-                'alumno_parciales' => $alumno_parciales, 'instancias' => $instancias, "parciales" => $parciales,'array_parcial_instancia'=>$array_parcial_instancia
+                'alumno_parciales' => $alumno_parciales, 'instancias' => $instancias, "parciales" => $parciales,'array_parcial_instancia'=>$array_parcial_instancia,'titulo'=>$titulo
             ));
 
     }

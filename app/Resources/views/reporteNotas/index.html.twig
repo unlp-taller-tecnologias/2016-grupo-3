@@ -5,42 +5,46 @@
 
 
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <caption>REPORTE</caption>
+        <caption>Reporte de notas para la comision {{titulo}}</caption>
         <thead>
             <tr>
                 <th>Nombre y Apellido</th>
                  <th>Curso</th>
                   <th>Comision</th>
                        {% for array_parcial_instancia in array_parcial_instancia %}
-                          <th colspan="{{ array_parcial_instancia.instancia|length }}">{{ array_parcial_instancia.parcial.nombre }}</th>
+                          <th colspan="{{ array_parcial_instancia.instancia|length }}" style="text-align:center">{{ array_parcial_instancia.parcial.nombre }}</th>
                           
                         {% endfor %}
                     
-                    <th>Cantidad de clases</th>
-                      <th>Porcentaje Presentes</th>
+                    
 
             </tr>
         </thead>
         <tbody>
-          
-      
+       {% for alumno_parciales in alumno_parciales %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                 <td></td>
-                <td></td>
-                <td></td>
-                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
 
+  
+                <td>{{alumno_parciales.alumno.apellido}}, {{alumno_parciales.alumno.nombre}}</td>
+                <td>{{alumno_parciales.curso.nombre}}</td>
+                <td>{{alumno_parciales.comision.nombre}}</td>
+                 {% for par in alumno_parciales.parcial_alumno %}
+                        {% for instan in par.instancia_parcial %}
+                            
+                             <td>    
+                              <h4>{{instan.instancia.nombre}}:</h4>
+                              <b style="font-weight:bold;">ESTADO:</b> {{instan.estado}}<br>
+                              <b>NOTA:</b> {{instan.nota}}<br>
+                             <b>CONDICION:</b> {{instan.condicion}}<br>
+                             <b>OBS:</b> {{instan.observacion}}
+                              </td>
+                        {% endfor %}
+               
+                       
+                  {% endfor %}
+              
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
