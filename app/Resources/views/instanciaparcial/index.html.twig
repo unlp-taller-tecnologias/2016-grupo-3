@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <a href="{{ path('instanciaparcial_new') }}?id={{ parcial }}" class="btn btn-primary">Nueva Instancia de Parcial</a>
 
+    {% if secretario == true %}
+        <a href="{{ path('instanciaparcial_new') }}?id={{ parcial }}" class="btn btn-primary">Nueva Instancia de Parcial</a>
+    {% endif %}
   
     <form action="{{ path('instanciaparcial_index') }}update" method="post">
 
@@ -60,7 +62,7 @@
     <a class="btn btn-primary" href="{{ path('parcial_index') }}?idCursada={{ cursada }}">Volver</a>
 
         {% if secretario == true %}
-            <input type="submit" value="Actualizar estados">
+            <input type="submit" value="Actualizar estados" class="btn btn-primary">
         {% endif %}
     </form>
 

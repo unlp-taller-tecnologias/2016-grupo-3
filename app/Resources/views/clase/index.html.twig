@@ -2,7 +2,9 @@
 
 {% block body %}
     
-        <a href="{{ path('clase_new') }}?id={{ cursada }}"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal">Dar de alta una clase</button></a>
+    {% if secretario == true %}
+        <a href="{{ path('clase_new') }}?id={{ cursada }}" class="btn btn-primary">Dar de alta una clase</a>
+    {% endif %}
 
     <form action="{{ path('clase_index') }}update" method="post">
 
@@ -58,10 +60,13 @@
         {% endfor %}
         </tbody>
     </table>
-    {% if secretario == true %}
-            <input type="submit" value="Actualizar estados">
-        {% endif %}
-    </form>
+
     <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ cursada }}">Volver</a>
+
+    {% if secretario == true %}
+        <input type="submit" value="Actualizar estados" class="btn btn-primary">
+    {% endif %}
+    </form>
+    
   
 {% endblock %}
