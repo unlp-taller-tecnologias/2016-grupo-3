@@ -1,5 +1,70 @@
-   {% for alumnos in alumnos %}
-   			{{ alumnos.0.nombre }}
-
- {% endfor %}
+<style type="text/css">
+	
  
+#alumnoTabla table{
+	margin: 0 auto;
+	text-align: center;
+	border-collapse: collapse;
+	width:100%;
+	color: #1F1F1F;
+	font-weight: normal;padding:1em;
+}
+
+#alumnoTabla caption {	
+	border-top-left-radius:1em;
+	border-top-right-radius:1em;
+	margin-top:2%;
+	background: #014354;
+	color: white;
+	text-align: center;
+	padding:0.5em;
+	font-family:'Dosis', sans-serif;
+	font-size:16px ;
+	font-weight: normal;
+}
+#alumnoTabla thead{
+	background:#4D394A;
+	color:white;
+}
+
+#alumnoTabla th, td {
+	font-family:'Dosis', sans-serif;
+	font-size: 13px;
+	text-align: center;
+	text-indent: 0ex;
+	padding:0.1em;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #D6D6D6;
+	border-bottom-color: #D6D6D6;
+	border-left-color: #D6D6D6;
+}
+</style>
+
+<table  id="alumnoTabla" width="520px"   >
+				<thead style="background:#4D394A; color:white;">
+				<tr>	
+					<td style="text-align:center" >Nombre</td>
+					<td style="text-align:center" >Apellido</td>
+					<td style="text-align:center" >Ver Reporte</td>				
+				</tr>	
+				</thead>
+				<tbody>
+		
+		 {% for item in alumnos %}
+ 
+			<tr>
+			<td>{{ item.nombre }}</td>
+			<td>{{ item.apellido }}</td>
+			<td style="text-align:center"><a href="{{ path('reporteAlumno_index') }}?idCursada={{ item.idCurso }}&idCatedra={{ item.idCatedra }}&idAlumno={{ item.idAlumno}}" > <img height="20px" src="{{ asset('bundles/framework/images/reporte.png')}}" /></a></td>
+			</tr>
+
+				{% endfor %}
+			</tbody> 
+
+		</table>
+
