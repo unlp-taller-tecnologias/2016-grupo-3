@@ -97,11 +97,13 @@ class reporteAsistenciaController extends Controller
            // var_dump($comision->getNombre()); die();
            $titulo=$comision->getNombre();
 
+
            //Me guardo la comision a la que tengo que volver
            $miComision=$_GET['comision'];
          }
 
     //Este if evita que el sistema se rompa cuando esta en modo desarrollador, esto siempre tiene que estar antes del render, porque sino te tira un error de variable indefinida
+
     if (isset($miCurso)) {
       $miComision='';
     }else{
@@ -111,11 +113,7 @@ class reporteAsistenciaController extends Controller
     return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'titulo'=>$titulo, 'idCurso' => $miCurso,'idComision' => $miComision));
            // var_dump($alumnos_asistencia[0]); die();
          
-
   }
-
-
-
 
  
 }

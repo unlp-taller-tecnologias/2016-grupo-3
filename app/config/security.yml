@@ -50,3 +50,4 @@ security:
         - { path: ^/asistencias, role: ROLE_USER }
         - { path: ^/notas, role: ROLE_USER }
         - { path: ^/reporteNotas, role: ROLE_USER }
+        - { path: ^/reporteAlumno, role: ROLE_USER }

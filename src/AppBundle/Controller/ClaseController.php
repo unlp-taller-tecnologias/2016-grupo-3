@@ -113,27 +113,42 @@ class ClaseController extends Controller
      */
     public function newAction(Request $request)
     {
-        $clase = new Clase();
-        $form = $this->createForm('AppBundle\Form\ClaseType', $clase);
-        $form->handleRequest($request);
-        if(isset($_GET['id'])) $id = $_GET['id'];
-        else $id = 0;
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (esSecretario($this)) {
+        
+            $clase = new Clase();
+            $form = $this->createForm('AppBundle\Form\ClaseType', $clase);
+            $form->handleRequest($request);
+            if(isset($_GET['id'])) $id = $_GET['id'];
+            else $id = 0;
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
+                $clase->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
+                               array('id' => 'DESC')));
+                $em->persist($clase);
+                $em->flush();
+
+                return $this->redirectToRoute('clase_show', array('id' => $clase->getId()));
+            }
+
+            return $this->render('clase/new.html.twig', array(
+                'clase' => $clase,
+                'form' => $form->createView(),
+                'cursada' => $id
+            ));
+
+        }else{
+            $secretario=false;
+
             $em = $this->getDoctrine()->getManager();
-            $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
-            $clase->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
-                           array('id' => 'DESC')));
-            $em->persist($clase);
-            $em->flush();
+            $catedra = getIdCatedra($this,$em);
 
-            return $this->redirectToRoute('clase_show', array('id' => $clase->getId()));
+            $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
+            $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
+            return $this->render('cursos/index.html.twig', array(
+                'cursos' => $cursos, 'secretario' => $secretario,
+            'nombreCatedra' => $nombreCatedra));
         }
-
-        return $this->render('clase/new.html.twig', array(
-            'clase' => $clase,
-            'form' => $form->createView(),
-            'cursada' => $id
-        ));
     }
 
     /**
@@ -160,23 +175,36 @@ class ClaseController extends Controller
      */
     public function editAction(Request $request, Clase $clase)
     {
-        $deleteForm = $this->createDeleteForm($clase);
-        $editForm = $this->createForm('AppBundle\Form\ClaseType', $clase);
-        $editForm->handleRequest($request);
+        if (esSecretario($this)) {
+            $deleteForm = $this->createDeleteForm($clase);
+            $editForm = $this->createForm('AppBundle\Form\ClaseType', $clase);
+            $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($clase);
+                $em->flush();
+
+                return $this->redirectToRoute('clase_edit', array('id' => $clase->getId()));
+            }
+
+            return $this->render('clase/edit.html.twig', array(
+                'clase' => $clase,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
+        }else{
+            $secretario=false;
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($clase);
-            $em->flush();
+            $catedra = getIdCatedra($this,$em);
 
-            return $this->redirectToRoute('clase_edit', array('id' => $clase->getId()));
+            $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
+            $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
+            return $this->render('cursos/index.html.twig', array(
+                'cursos' => $cursos, 'secretario' => $secretario,
+            'nombreCatedra' => $nombreCatedra));
         }
-
-        return $this->render('clase/edit.html.twig', array(
-            'clase' => $clase,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**

@@ -80,10 +80,11 @@ class ComisionesController extends Controller
         $em = $this->getDoctrine()->getManager();    
         $alumnos = encontrarAlumnos($em,$_POST['nom'],$_POST['id_curso']);
 
-        var_dump($alumnos);die();
+       // var_dump($alumnos);die();
+        //$hola=var_dump($alumnos);
         return $this->render('comisiones/showAlumnos.html.twig',array('alumnos'=>$alumnos));
     }
-
+ 
     /**
      * Finds and displays a Comisiones entity.
      *

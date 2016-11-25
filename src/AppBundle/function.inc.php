@@ -56,7 +56,18 @@ function encontrarUnaNotaByAlumnoAndInstancia($em, $idAlumno, $idInstancia)
     return $q->getResult();
 }
 
-function encontrarAlumnos($em,$nombre,$id_curso)
+function encontrarAlumnos($em,$nom,$id_curso)
 {
+
+//var_dump($em);die();
+ //$em = $this->getDoctrine()->getManager();  
+     $nom='%'.$nom.'%';
+     $sql = "SELECT * FROM alumnos 
+        LEFT JOIN inscriptos ON (inscriptos.idAlumno = alumnos.id )
+        WHERE (alumnos.nombre LIKE :nom) AND (inscriptos.idCurso = :id_curso) ";
+   $params=array('nom'=>$nom, 'id_curso'=>$id_curso);
+    $stmt = $em->getConnection()->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
     
 }
