@@ -46,3 +46,7 @@ security:
         - { path: ^/instanciaparcial, role: ROLE_USER }
         - { path: ^/catedras, role: ROLE_SUPER_SUPER_ADMIN }
         - { path: ^/reporteAsistencia, role: ROLE_USER }
+        - { path: ^/user, role: ROLE_USER }
+        - { path: ^/asistencias, role: ROLE_USER }
+        - { path: ^/notas, role: ROLE_USER }
+        - { path: ^/reporteNotas, role: ROLE_USER }

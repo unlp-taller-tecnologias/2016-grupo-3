@@ -5,7 +5,7 @@
 
 
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <caption>Reporte de notas para la comision {{titulo}}</caption>
+        <caption>Reporte de notas {{titulo}}</caption>
         <thead>
             <tr>
                 <th>Nombre y Apellido</th>
@@ -47,5 +47,10 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if cursada %}
+      <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ cursada }}">Volver</a>
+    {% elseif comision %}
+      <a class="btn btn-primary" href="{{ path('alumnos_index') }}?id={{ comision }}">Volver</a>
+    {% endif %}
 
 {% endblock %}
