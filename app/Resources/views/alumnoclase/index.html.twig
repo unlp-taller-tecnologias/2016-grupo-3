@@ -42,9 +42,9 @@
         {% endfor %}
         </tbody>
     </table>
-        <input type="submit" value="Actualizar seleccionadas">
+        <a class="btn btn-primary" href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
+        <input type="submit" value="Actualizar asistencias" class="btn btn-primary">
     </form>
-    <br/>
-    <a class="btn btn-primary" href="{{ path('clase_index', { 'idComision': idComision }) }}">Volver</a>
+    
 
 {% endblock %}

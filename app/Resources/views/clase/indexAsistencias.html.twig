@@ -16,7 +16,11 @@
         <tbody>
         {% for clase in clases %}
             <tr>
+            {% if clase.estado != "suspendida" %}
                 <td><a href="{{ path('alumnoclase_index') }}?idComision={{ idComision }}&idClase={{ clase.id }}">{{ clase.nombre }}</a></td>
+            {% else %}
+                <td>{{ clase.nombre }}</td>
+            {% endif %}
                 <td>{{ clase.descripcion }}</td>
                 <td>{% if clase.fechaInicio %}{{ clase.fechaInicio|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if clase.fechaFin %}{{ clase.fechaFin|date('Y-m-d') }}{% endif %}</td>
