@@ -1,17 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>User edit</h1>
+	{% if editar_pass == true %}
+    	<h3>Editar Contraseña</h3>
+    {% else %}
+    	<h3>Editar Datos del usuario</h3>
+    {% endif %}
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <br><input type="submit" class="btn btn-primary" value="Editar docente" />
     {{ form_end(edit_form) }}
 
-    <!--<a href="{{ path('user_index') }}">Back to the list</a>-->
+
 
     {{ form_start(delete_form) }}
-        <br><input type="submit" class="btn btn-primary" value="Borrar docente">
+        <br>
+        {% if editar_pass == false %}
+            <input type="submit" class="btn btn-primary" value="Borrar docente">
+        {% endif %}
+    
+        <a class="btn btn-primary" href="{{ path('user_index') }}">Volver</a>
     {{ form_end(delete_form) }}
 
 {% endblock %}

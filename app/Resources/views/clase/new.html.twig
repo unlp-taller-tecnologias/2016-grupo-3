@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-     <h1>Nueva Clase</h1>
+	<style type="text/css">
+    #clase_fechaInicio, #clase_fechaFin, #clase_estado {
+        width: 16%;
+    }
+    </style>
+     <h3>Nueva Clase</h3>
     <div class="col-md-4"></div>
     <div class="col-md-4"> </div>
     <div class="col-md-4"></div>
@@ -9,9 +14,10 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <br><input class="btn btn-primary" type="submit" value="Crear" />
+        <a class="btn btn-primary" href="{{ path('clase_index') }}?idCursada={{ cursada }}">Volver</a>
     {{ form_end(form) }}
 
-    <a href="{{ path('clase_index') }}?id={{ cursada }}">Regresar</a>
+    
 
 {% endblock body %}

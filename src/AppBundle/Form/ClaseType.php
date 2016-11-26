@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ClaseType extends AbstractType
 {
@@ -16,17 +17,17 @@ class ClaseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('descripcion')
+            ->add('nombre',null, array('attr' => array('class' => 'form-control', 'minlength' => '10','maxlength'=>'40')))
+            ->add('descripcion','textarea', array('required' => true,'attr' => array('class' => 'form-control', 'minlength' => '10','maxlength'=>'60')))
             ->add('requerida')
-            ->add('fechaInicio', 'date')
-            ->add('fechaFin', 'date')
+            ->add('fechaInicio', DateType::class, array('required' => true,'widget' => 'single_text','attr' => array('class' => 'form-control','min' => date('Y-m-d'))))
+            ->add('fechaFin', DateType::class, array('required' => false,'widget' => 'single_text','attr' => array('class' => 'form-control','min' => date('Y-m-d'))))
             ->add('estado', ChoiceType::class, 
             		array( 'choices'  => array (
             			'pendiente' => 'pendiente',
     					'suspendida' => 'suspendida',
         				'finalizada' => 'finalizada', 
-        				)
+        				),'attr' => array('class' => 'form-control')
     				)
             	)
         ;

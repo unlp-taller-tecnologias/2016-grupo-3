@@ -3,7 +3,7 @@
 {% block body %}
 
     {% if secretario == true %}
-        <a href="{{ path('instanciaparcial_new') }}?id={{ parcial }}" class="btn btn-primary">Nueva Instancia de Parcial</a>
+        <a href="{{ path('instanciaparcial_new') }}?idParcial={{ parcial }}" class="btn btn-primary">Nueva Instancia de Parcial</a>
     {% endif %}
   
     <form action="{{ path('instanciaparcial_index') }}update" method="post">

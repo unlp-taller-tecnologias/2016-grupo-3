@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Clase edit</h1>
+    <style type="text/css">
+    #clase_fechaInicio, #clase_fechaFin, #clase_estado {
+        width: 16%;
+    }
+    </style>
+    <h3>Editar una clase</h3>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <br><input class="btn btn-primary" type="submit" value="Editar" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('clase_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {{ form_start(delete_form) }}
+        <br><input class="btn btn-primary" type="submit" value="Borrar">
+        <a class="btn btn-primary" href="{{ path('clase_index') }}?idCursada={{ cursada }}">Volver</a>
+    {{ form_end(delete_form) }}
+
 {% endblock %}

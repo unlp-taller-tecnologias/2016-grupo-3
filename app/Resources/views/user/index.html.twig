@@ -9,7 +9,8 @@
                 <th>Nombre</th>
                 <th>Dni</th>
                 <th>Cargo</th>
-                <th>Editar</th>
+                <th>Editar Datos Personales</th>
+                <th>Editar contraseña</th>
             </tr>
         </thead>
         <tbody>
@@ -20,11 +21,13 @@
                 <td>{{ user.dni }}</td>
                 <td>{{ user.cargo }}</td>
                 <td><a href="{{ path('user_edit', { 'id': user.id }) }}">Editar</a></td>
+                <td><a href="{{ path('user_edito', { 'id': user.id }) }}">Editar</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('user_new') }}" class="btn btn-primary">Nuevo docente</a>
+    <a class="btn btn-primary" href="{{ path('cursos_index') }}">Volver</a>
 
 {% endblock %}

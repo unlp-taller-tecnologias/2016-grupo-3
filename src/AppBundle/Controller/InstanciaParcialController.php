@@ -51,7 +51,9 @@ class InstanciaParcialController extends Controller
                 'instanciaParcials' => $instanciaParcials, 'parcial' => $idParcial, 'idComision' => $_GET['idComision']
                 ));
         }else{
+
             $idCursada = $em->getRepository('AppBundle:Parcial')->findOneById($idParcial)->getCursada()->getId();
+            
             return $this->render('instanciaparcial/index.html.twig', array(
                 'instanciaParcials' => $instanciaParcials,
                 'secretario' => $secretario,
@@ -128,13 +130,19 @@ class InstanciaParcialController extends Controller
             if(isset($_GET['idParcial'])) $idParcial = $_GET['idParcial'];
             else $idParcial = 0;
             if ($form->isSubmitted() && $form->isValid() && $idParcial != 0) {
+                
+                $fechaFin=$instanciaParcial->getFechaFin();
+                if (!isset($fechaFin)) {
+                    $instanciaParcial->setFechaFin($instanciaParcial->getFechaInicio());
+                }
+
                 $em = $this->getDoctrine()->getManager();
                 $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
                 $instanciaParcial->setParcial($em->getRepository('AppBundle:Parcial')->findOneById($idParcial));
                 $em->persist($instanciaParcial);
                 $em->flush();
 
-                return $this->redirectToRoute('instanciaparcial_show', array('id' => $instanciaParcial->getId()));
+                return $this->redirectToRoute('instanciaparcial_index', array('idParcial' => $_GET['idParcial']));
             }
 
             return $this->render('instanciaparcial/new.html.twig', array(
@@ -190,13 +198,14 @@ class InstanciaParcialController extends Controller
                 $em->persist($instanciaParcial);
                 $em->flush();
 
-                return $this->redirectToRoute('instanciaparcial_edit', array('id' => $instanciaParcial->getId()));
+                return $this->redirectToRoute('instanciaparcial_index', array('idParcial' => $instanciaParcial->getParcial()->getId()));
             }
 
             return $this->render('instanciaparcial/edit.html.twig', array(
                 'instanciaParcial' => $instanciaParcial,
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
+                'idParcial'=>$instanciaParcial->getParcial()->getId()
             ));
         }else{
             $secretario=false;
@@ -229,7 +238,7 @@ class InstanciaParcialController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('instanciaparcial_index');
+        return $this->redirectToRoute('instanciaparcial_index', array('idParcial' => $instanciaParcial->getParcial()->getId()));
     }
 
     /**

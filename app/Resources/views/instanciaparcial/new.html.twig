@@ -1,12 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>InstanciaParcial creation</h1>
+	<style type="text/css">
+	#instancia_parcial_fechaInicio, #instancia_parcial_fechaFin, #instancia_parcial_estado {
+	    width: 16%;
+	}
+	</style>
+    <h3>Nueva instancia de parcial</h3>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <br><input class="btn btn-primary" type="submit" value="Crear instancia" />
+
+        <a class="btn btn-primary" href="{{ path('instanciaparcial_index') }}?idParcial={{ parcial }}">Volver</a>
     {{ form_end(form) }}
 
-    <a href="{{ path('instanciaparcial_index') }}?id={{ parcial }}">Regresar</a>
+    
 {% endblock %}

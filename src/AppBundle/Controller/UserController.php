@@ -51,10 +51,9 @@ class UserController extends Controller
         if( esSecretario($this)){
             $userManager = $this->get('fos_user.user_manager');
             $user = $userManager->createUser();
-            $form = $this->createForm('AppBundle\Form\UserType', $user);
+            $form = $this->createForm('AppBundle\Form\UserType', $user, array('accion'=>'crear_usuario'));
             $form->handleRequest($request);
             
-
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 //Valida que el nombre de usuario no exista
@@ -108,22 +107,21 @@ class UserController extends Controller
     /**
      * Displays a form to edit an existing User entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
+     * @Route("/{id}/edito", name="user_edito")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
+    public function editoAction(Request $request, User $user)
     {
         if (esSecretario($this)){
             $deleteForm = $this->createDeleteForm($user);
-            $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+            $editForm = $this->createForm('AppBundle\Form\UserType', $user, array('accion'=>'modi'));
             $editForm->handleRequest($request);
-
             if ($editForm->isSubmitted() && $editForm->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 //Valida que el nombre de usuario no exista
                 $existe = $em->getRepository('AppBundle:User')->findOneByUsername($user->getUsername());
                 if (empty($existe)){
-                    $user->setPlainPassword($user->getPassword()); 
+                    //$user->setPlainPassword($user->getPassword()); 
                     $em->persist($user);
                     $em->flush();
                     return $this->redirectToRoute('user_index');
@@ -140,6 +138,49 @@ class UserController extends Controller
                 'user' => $user,
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
+                'editar_pass'=>true,
+            ));
+        }else{
+            return $this->redirect($this->generateUrl('cursos_index'));
+        }
+    }
+
+
+    /**
+     * Displays a form to edit an existing User entity.
+     *
+     * @Route("/{id}/edit", name="user_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, User $user)
+    {
+        if (esSecretario($this)){
+            $deleteForm = $this->createDeleteForm($user);
+            $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+            $editForm->handleRequest($request);
+            if ($editForm->isSubmitted() && $editForm->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                //Valida que el nombre de usuario no exista
+                $existe = $em->getRepository('AppBundle:User')->findOneByUsername($user->getUsername());
+                if (empty($existe)){
+                    //$user->setPlainPassword($user->getPassword()); 
+                    $em->persist($user);
+                    $em->flush();
+                    return $this->redirectToRoute('user_index');
+                }elseif ($existe->getId() == $user->getId()) {
+                    //$user->setPlainPassword($user->getPassword());               
+                    $em->persist($user);
+                    $em->flush();                    
+                    return $this->redirectToRoute('user_index');
+                }
+                return $this->redirectToRoute('user_edit',array('id' => $user->getId()));
+            }
+
+            return $this->render('user/edit.html.twig', array(
+                'user' => $user,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+                'editar_pass'=>false,
             ));
         }else{
             return $this->redirect($this->generateUrl('cursos_index'));
@@ -184,4 +225,6 @@ class UserController extends Controller
             ->getForm()
         ;
     }
+
+    
 }

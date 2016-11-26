@@ -1,21 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>InstanciaParcial edit</h1>
+    <style type="text/css">
+    #instancia_parcial_fechaInicio, #instancia_parcial_fechaFin, #instancia_parcial_estado {
+        width: 16%;
+    }
+    </style>
+    <h3>Modificar la instancia de un parcial</h3>
+
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <br><input class="btn btn-primary" type="submit" value="Modificar" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('instanciaparcial_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {{ form_start(delete_form) }}
+        <br><input class="btn btn-primary" type="submit" value="Borrar"/>
+        <a class="btn btn-primary" href="{{ path('instanciaparcial_index') }}?idParcial={{ idParcial }}">Volver</a>
+    {{ form_end(delete_form) }}
+
+
+
 {% endblock %}

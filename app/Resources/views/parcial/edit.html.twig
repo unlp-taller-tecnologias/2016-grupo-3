@@ -10,6 +10,7 @@
 
     {{ form_start(delete_form) }}
         <br><input class="btn btn-primary" type="submit" value="Borrar">
+        <a class="btn btn-primary" href="{{ path('parcial_index') }}?idCursada={{ idCursada }}">Volver</a>
     {{ form_end(delete_form) }}
 
 {% endblock %}

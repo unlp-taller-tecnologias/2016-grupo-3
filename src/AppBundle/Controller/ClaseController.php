@@ -122,13 +122,17 @@ class ClaseController extends Controller
             else $id = 0;
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                $fechaFin=$clase->getFechaFin();
+                if (!isset($fechaFin)) {
+                    $clase->setFechaFin($clase->getFechaInicio());
+                }
                 $catedra = getIdCatedra($this,$em); //buscamos la catedra del usuario activo
                 $clase->setCursada($em->getRepository('AppBundle:Cursos')->findOneBy( array('idcatedra'=>$catedra),
                                array('id' => 'DESC')));
                 $em->persist($clase);
                 $em->flush();
 
-                return $this->redirectToRoute('clase_show', array('id' => $clase->getId()));
+                return $this->redirectToRoute('clase_index', array('idCursada' => $clase->getCursada()->getId()));
             }
 
             return $this->render('clase/new.html.twig', array(
@@ -190,6 +194,7 @@ class ClaseController extends Controller
 
             return $this->render('clase/edit.html.twig', array(
                 'clase' => $clase,
+                'cursada'=> $clase->getCursada()->getId(),
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
             ));
@@ -224,7 +229,7 @@ class ClaseController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('clase_index');
+        return $this->redirectToRoute('clase_index', array('idCursada' => $clase->getCursada()->getId()));
     }
 
     /**
