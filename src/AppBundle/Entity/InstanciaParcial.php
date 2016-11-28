@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -17,16 +18,36 @@ class InstanciaParcial
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=50) **/
+    /** @ORM\Column(type="string", length=50) 
+     * @Assert\NotNull(message = "El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "5",
+     *              max = "40",
+     *              minMessage = "El nombre de la instancia debe tener 10 letras por lo menos.",
+     *              maxMessage = "El nombre de la instancia no puede tener mas de 40 letras."
+     *)
+    **/
     protected $nombre;
 
-    /** @ORM\Column(type="string", length=200) **/
+    /** @ORM\Column(type="string", length=200) 
+     * @Assert\NotNull(message = "El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "5",
+     *              max = "60",
+     *              minMessage = "El descripcion de la instancia debe tener 10 letras por lo menos.",
+     *              maxMessage = "El descripcion de la instancia no puede tener mas de 60 letras."
+     *)
+    **/
     protected $descripcion;
 
-    /** @ORM\Column(type="date") **/
+    /** @ORM\Column(type="date") 
+     * @Assert\Date(message = "El valor ingresado no es una fecha")
+    **/
     protected $fechaInicio;
 
-    /** @ORM\Column(type="date") **/
+    /** @ORM\Column(type="date") 
+     * @Assert\Date(message = "El valor ingresado no es una fecha")
+    **/
     protected $fechaFin;
     
      /** @ORM\Column(type="string", columnDefinition="ENUM('pendiente', 'suspendido','finalizado')") */

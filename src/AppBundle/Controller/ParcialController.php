@@ -148,6 +148,7 @@ class ParcialController extends Controller
                 'parcial' => $parcial,
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
+                'idCursada' => $parcial->getCursada()->getId()
             ));
         }else{
             $secretario=false;

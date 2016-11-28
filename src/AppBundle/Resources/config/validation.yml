@@ -5,13 +5,12 @@ AppBundle\Entity\User:
             - NotBlank: {message: El nombre de usuario es obligatorio.}
             - Length:
                 min : "3"
-                max : "15"
+                max : "25"
                 minMessage : "El nombre de usuario debe tener al menos 3 letras"
                 maxMessage: "El nombre de usuario puede tener a lo sumo 15 letras"
 
         password:
-            - NotBlank: {message: La contraseña es obligatoria.}
             - Length:
                 min : "6"
                 minMessage : "La contraseña debe tener al menos 6 caracteres"
-    
+

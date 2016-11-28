@@ -64,8 +64,11 @@
         {% endfor %}
         </tbody>
     </table>
-        <input type="submit" value="Actualizar seleccionadas">
+
+        <a class="btn btn-primary" href="{{ path('instanciaparcial_index') }}?idParcial={{ idParcial }}&idComision={{ idComision }}&idCursada={{ idCursada }}">Volver</a>
+
+        <input type="submit" value="Actualizar notas" class="btn btn-primary">
     </form>
-<a class="btn btn-primary" href="{{ path('instanciaparcial_index') }}?idParcial={{ idParcial }}&idComision={{ idComision }}&idCursada={{ idCursada }}">Volver</a>
+
 
 {% endblock %}

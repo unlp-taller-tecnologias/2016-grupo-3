@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -18,10 +19,26 @@ class Parcial
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=50) **/
+    /** @ORM\Column(type="string", length=50) 
+     * @Assert\NotNull(message = "El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "5",
+     *              max = "40",
+     *              minMessage = "El nombre del parcial debe tener 10 letras por lo menos.",
+     *              maxMessage = "El nombre del parcial no puede tener mas de 40 letras."
+     *)
+    **/
     protected $nombre;
 
-    /** @ORM\Column(type="string", length=200) **/
+    /** @ORM\Column(type="string", length=200) 
+     * @Assert\NotNull(message = "El campo no puede estar en blanco")
+     * @Assert\Length(
+     *              min = "5",
+     *              max = "60",
+     *              minMessage = "La descripcion debe tener 10 letras por lo menos.",
+     *              maxMessage = "La descripcion no puede tener mas de 60 letras."
+     *)
+    **/
     protected $descripcion;
 
     /**

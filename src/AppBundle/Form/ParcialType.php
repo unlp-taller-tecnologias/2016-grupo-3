@@ -15,8 +15,8 @@ class ParcialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('descripcion')
+            ->add('nombre',null, array('attr' => array('class' => 'form-control', 'minlength' => '9','maxlength'=>'40','placeholder'=>'Ej: Primer parcial 2016')))
+            ->add('descripcion','textarea', array('label'=>'Descripción','attr' => array('class' => 'form-control','minlength' => '10','maxlength'=>'60')))
         ;
     }
     

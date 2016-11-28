@@ -58,6 +58,7 @@ function encontrarUnaNotaByAlumnoAndInstancia($em, $idAlumno, $idInstancia)
 
 function encontrarAlumnos($em,$nom,$id_curso)
 {
+
 //var_dump($em);die();
  //$em = $this->getDoctrine()->getManager();  
      $nom='%'.$nom.'%';

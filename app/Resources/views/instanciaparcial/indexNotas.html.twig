@@ -16,7 +16,12 @@
         <tbody>
         {% for instanciaParcial in instanciaParcials %}
             <tr>
+            {% if instanciaParcial.estado != "suspendido" %}
                 <td><a href="{{ path('notas_index') }}?idComision={{ idComision }}&idInstanciaP={{ instanciaParcial.id }}">{{ instanciaParcial.nombre }}</a></td>
+            {% else %}
+                <td>{{ instanciaParcial.nombre }}</td>
+            {% endif %}
+                
                 <td>{{ instanciaParcial.descripcion }}</td>
                 <td>{% if instanciaParcial.fechaInicio %}{{ instanciaParcial.fechaInicio|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if instanciaParcial.fechaFin %}{{ instanciaParcial.fechaFin|date('Y-m-d') }}{% endif %}</td>
