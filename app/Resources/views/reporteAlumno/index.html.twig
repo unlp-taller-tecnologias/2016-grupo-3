@@ -1,32 +1,81 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="row">
+<div class="col-md-4">
+    <p>ALUMNO: {{ alumno.nombre}}, {{alumno.apellido}}</p>
+     <p>DNI: {{ alumno.dni}}</p>
+     <p>LEGAJO: {{ alumno.legajo}}</p>
+     
+</div>
+<div class="col-md-4">
+     <p>TELEFONO: {{ alumno.telefono}}</p>
+     <p>CELULAR: {{ alumno.celular}}</p>
+     <p>E-MAIL: {{ alumno.mail}}</p>
+</div>
+<div class="col-md-4">
+    <p>ORIGEN: {{ alumno.origen}}</p>
+    <p>Otras Comisiones a la que pertenecio:</p>
+</div>
+   </div>
+<br>    
 
+    <div class="row">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">CLASES - Comision: {{comision.nombre}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-4">
+         <p>COMISION ACTUAL:{{comision.nombre}}</p>
+    </div>
+     <div class="col-md-4">
+        <p>CLASES TOTALES: {{  clases_alumno.clases|length}}</p>  
+        <p>CLASES Req. y Finalizadas: {{  clases_alumno.cant_clases_tomadas}}</p>
+        <p>CLASES PRESENTE: {{  clases_alumno.cant_presentes}}</p>
+    </div>
+     <div class="col-md-4">
+         <p>PORCENTAJE DE ASISTENCIA: {{ clases_alumno.cant_presentes|length * 100 / clases_alumno.cant_clases_tomadas|length }}%   </p>
+    </div>
+    
 
+      
+        
 
+  </div>
+</div>
+
+  
+   </div>
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <caption>Reporte de Alumno  {{ titulo }}</caption>
+        <caption>Parciales del Alumno  {{ titulo }}</caption>
         <thead>
             <tr>
-                <th>Nombre y Apellido</th>
-                 <th>Curso</th>
-                  <th>Comision</th>
-                    
-            
-                    <th>Cantidad de clases</th>
-                      <th>Porcentaje Presentes</th>
-
+                {% for array_parcial_instancia in array_parcial_instancia %}
+                          <th colspan="{{ array_parcial_instancia.instancia|length }}" style="text-align:center">{{ array_parcial_instancia.parcial.nombre }}</th>
+                          
+                        {% endfor %}
             </tr>
         </thead>
         <tbody>
      
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
                 
-                <td></td>
-                <td></td>
+                     {% for par in parcial_alumno %}
+                        {% for instan in par.instancia_parcial %}
+                            
+                             <td>    
+                              <h4>{{instan.instancia.nombre}}:</h4>
+                              <b style="font-weight:bold;">ESTADO:</b> {{instan.estado}}<br>
+                              <b>NOTA:</b> {{instan.nota}}<br>
+                             <b>CONDICION:</b> {{instan.condicion}}<br>
+                             <b>OBS:</b> {{instan.observacion}}
+                              </td>
+                        {% endfor %}
+               
+                       
+                  {% endfor %}
+               
             </tr>
  
         </tbody>
