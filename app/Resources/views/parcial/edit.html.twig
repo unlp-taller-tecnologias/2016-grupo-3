@@ -3,6 +3,10 @@
 {% block body %}
     <h3>Editar parcial</h3>
 
+    {% if tieneInstancias == true %}
+        <h4>El parcial tiene instancias y no se puede eliminar.</h4>
+    {% endif %}
+
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <br><input class="btn btn-primary" type="submit" value="Editar" />

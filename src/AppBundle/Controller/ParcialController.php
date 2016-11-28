@@ -144,11 +144,17 @@ class ParcialController extends Controller
                 return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
             }
 
+            if (isset($_GET['tieneInstancias']))
+                $result=true;
+            else
+                $result=false;
+
             return $this->render('parcial/edit.html.twig', array(
                 'parcial' => $parcial,
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
-                'idCursada' => $parcial->getCursada()->getId()
+                'idCursada' => $parcial->getCursada()->getId(),
+                'tieneInstancias'=>$result
             ));
         }else{
             $secretario=false;
@@ -175,13 +181,18 @@ class ParcialController extends Controller
         $form = $this->createDeleteForm($parcial);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $tieneInstancias=$em->getRepository('AppBundle:InstanciaParcial')->findOneByParcial($parcial->getId());
+
+        if ($form->isSubmitted() && $form->isValid() && empty($tieneInstancias)) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($parcial);
             $em->flush();
+        }else{
+            return $this->redirectToRoute('parcial_edit', array('id' => $parcial->getId(), 'tieneInstancias'=>'algo'));
         }
 
-        return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId()));
+        return $this->redirectToRoute('parcial_index', array('idCursada' => $parcial->getCursada()->getId(), 'tieneInstancias'=>'algo'));
     }
 
     /**

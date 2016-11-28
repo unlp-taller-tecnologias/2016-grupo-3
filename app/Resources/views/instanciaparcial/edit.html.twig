@@ -8,6 +8,9 @@
     </style>
     <h3>Modificar la instancia de un parcial</h3>
 
+    {% if tieneNotas == true %}
+        <h4>La instancia tiene notas de alumnos y no se puede eliminar.</h4>
+    {% endif %}
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
