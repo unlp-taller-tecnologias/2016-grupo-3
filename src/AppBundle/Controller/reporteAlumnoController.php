@@ -29,12 +29,11 @@ class reporteAlumnoController extends Controller
 
          //DATOS DEL ALUMNO
          $alumno = $em->getRepository('AppBundle:Alumnos')->findOneById($_GET['idAlumno']);
-        // var_dump($alumno->getId());
+         var_dump($alumno->getId());
         $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['idComision']);
         //OTRAS COMISIONES
-      //  $otras_comisiones=$alumno->getComisiones();
-       // var_dump($otras_comisiones);
-
+        $otras_comisiones=encontrarAlumnoEnCursosAnteriores($em,$$_GET['idAlumno'],$_GET['idCursada']);
+        //var_dump($otras_comisiones); die();
          //LASES DEL ALUMNO
          $titulo=$alumno->getApellido();
          $titulo .=", ".$alumno->getNombre();
@@ -116,7 +115,7 @@ class reporteAlumnoController extends Controller
 
          //OTRAS CURSADAS DE LA MISMA CATEDRA EN LA QUE PARTICIPO
 
-         return $this->render('reporteAlumno/index.html.twig',array('titulo'=>$titulo,'alumno'=>$alumno,'comision'=>$comision,'clases_alumno'=>$clases_alumno,'parcial_alumno'=>$parcial_alumno,'array_parcial_instancia'=>$array_parcial_instancia));
+         return $this->render('reporteAlumno/index.html.twig',array('titulo'=>$titulo,'alumno'=>$alumno,'comision'=>$comision,'clases_alumno'=>$clases_alumno,'parcial_alumno'=>$parcial_alumno,'array_parcial_instancia'=>$array_parcial_instancia,'otras_comisiones'=>$otras_comisiones));
     }
 
  

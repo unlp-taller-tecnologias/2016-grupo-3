@@ -71,3 +71,17 @@ function encontrarAlumnos($em,$nom,$id_curso)
     return $stmt->fetchAll();
     
 }
+function encontrarAlumnoEnCursosAnteriores($em,$id_alumno,$id_curso)
+{
+
+//var_dump($em);die();
+ //$em = $this->getDoctrine()->getManager();  
+     $sql = "SELECT * FROM inscriptos 
+        LEFT JOIN cursos ON (inscriptos.idCurso = cursos.id )
+        WHERE inscriptos.idAlumno = :id_alumno AND inscriptos.idCurso != :id_curso ";
+   $params=array('id_alumno'=>$id_alumno, 'id_curso'=>$id_curso);
+    $stmt = $em->getConnection()->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+    
+}
