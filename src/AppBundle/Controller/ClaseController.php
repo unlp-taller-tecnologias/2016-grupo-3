@@ -192,11 +192,17 @@ class ClaseController extends Controller
                 return $this->redirectToRoute('clase_edit', array('id' => $clase->getId()));
             }
 
+            if (isset($_GET['tieneAlumnos']))
+                $result=true;
+            else
+                $result=false;
+
             return $this->render('clase/edit.html.twig', array(
                 'clase' => $clase,
                 'cursada'=> $clase->getCursada()->getId(),
                 'edit_form' => $editForm->createView(),
                 'delete_form' => $deleteForm->createView(),
+                'tieneAlumnos' => $result
             ));
         }else{
             $secretario=false;
@@ -223,10 +229,14 @@ class ClaseController extends Controller
         $form = $this->createDeleteForm($clase);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $tieneAlumnos=$em->getRepository('AppBundle:AlumnoClase')->findOneByClases($clase->getId());
+        if ($form->isSubmitted() && $form->isValid() && empty($tieneAlumnos)) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($clase);
             $em->flush();
+        }else{
+            return $this->redirectToRoute('clase_edit', array('id' => $clase->getId(), 'tieneAlumnos'=>'algo'));
         }
 
         return $this->redirectToRoute('clase_index', array('idCursada' => $clase->getCursada()->getId()));
