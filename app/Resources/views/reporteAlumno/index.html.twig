@@ -3,20 +3,20 @@
 {% block body %}
 <div class="row">
 <div class="col-md-4">
-    <p>ALUMNO: {{ alumno.nombre}}, {{alumno.apellido}}</p>
-     <p>DNI: {{ alumno.dni}}</p>
-     <p>LEGAJO: {{ alumno.legajo}}</p>
+    <p><u>ALUMNO:</u> {{alumno.apellido}}, {{ alumno.nombre}} </p>
+     <p><u>DNI:</u> {{ alumno.dni}}</p>
+     <p><u>LEGAJO:</u> {{ alumno.legajo}}</p>
      
 </div>
 <div class="col-md-4">
-     <p>TELEFONO: {{ alumno.telefono}}</p>
-     <p>CELULAR: {{ alumno.celular}}</p>
-     <p>E-MAIL: {{ alumno.mail}}</p>
+     <p><u>TELEFONO:</u> {{ alumno.telefono}}</p>
+     <p><u>CELULAR:</u> {{ alumno.celular}}</p>
+     <p><u>E-MAIL:</u> {{ alumno.mail}}</p>
 </div>
 <div class="col-md-4">
-    <p>ORIGEN: {{ alumno.origen}}</p>
-     <p>COMISION ACTUAL:{{comision.nombre}}</p>
-    <p>Otras Comisiones:</p>
+    <p><u>ORIGEN:</u> {{ alumno.origen}}</p>
+     <p><u>COMISION ACTUAL:</u>{{comision.nombre}}</p>
+    <p><u>Otras Comisiones:</u></p>
        {% if otras_comisiones|length != 0 %}
           {% for otras_comisiones in otras_comisiones %}
                 {{ otras_comisiones.nombre }}
@@ -34,7 +34,7 @@
     <div class="row">
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title" style="float:center;">CLASES - Comision: {{comision.nombre}}</h3>
+    <h3 class="panel-title" style="text-align:center;">CLASES - Comision: {{comision.nombre}}</h3>
   </div>
   <div class="panel-body">
     <div class="col-md-4">
@@ -47,7 +47,7 @@
         <p>CLASES PRESENTE: {{  clases_alumno.cant_presentes}}</p>
     </div>
      <div class="col-md-4">
-         <p>PORCENTAJE DE ASISTENCIA: {{ clases_alumno.cant_presentes|length * 100 / clases_alumno.cant_clases_tomadas|length }}%   </p>
+         <p>PORCENTAJE ASISTENCIA: {{ clases_alumno.cant_presentes|length * 100 / clases_alumno.cant_clases_tomadas|length }}%   </p>
     </div>
     
 
