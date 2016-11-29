@@ -14,7 +14,8 @@
                     {% for clases in clases %}
                      <th>{{ clases.nombre }}</th>
                     {% endfor %}
-                    <th>Cantidad de clases</th>
+                    <th>Total de clases </th>
+                    <th>Total de clases Req. y finalizadas </th>
                       <th>Porcentaje Presentes</th>
 
             </tr>
@@ -35,8 +36,9 @@
                    <td> {{asist.asistencia}}</td>
                 {% endfor %}
                
-                <td>{{ alumnos_asistencia.asistencias|length }}</td>
-                <td>{{ cant * 100 / alumnos_asistencia.asistencias|length }}%</td>
+                <td>{{ clases|length }}</td>
+                <td>{{ cant_clases_tomadas }}</td>
+                <td>{{ cant * 100 / cant_clases_tomadas }}%</td>
             </tr>
         {% endfor %}
         </tbody>

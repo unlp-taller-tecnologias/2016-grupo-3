@@ -31,7 +31,15 @@ class reporteAsistenciaController extends Controller
            
             $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['curso']);
             $clases = $cursos->getClases();
-          
+            $cant_clases_tomadas="";
+             foreach ($clases as $clas) {
+                    if ($clas->getEstado() == "finalizada") {
+                      if ($clas->getRequerida() == 1) {
+                         $cant_clases_tomadas=$cant_clases_tomadas + 1;
+                      }
+                     
+                    }
+                  }
             $comisiones= $cursos->getComisiones();
  
             $asistencias = array();
@@ -74,7 +82,15 @@ class reporteAsistenciaController extends Controller
            //   var_dump($id);die();
             $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($curso);
             $clases = $cursos->getClases();
-          
+            $cant_clases_tomadas="";
+            foreach ($clases as $clas) {
+                    if ($clas->getEstado() == "finalizada") {
+                      if ($clas->getRequerida() == 1) {
+                         $cant_clases_tomadas=$cant_clases_tomadas + 1;
+                      }
+                     
+                    }
+                  }
 
             $asistencias = array();
             $alumnos_asistencia = array();
@@ -110,7 +126,7 @@ class reporteAsistenciaController extends Controller
       $miCurso='';
     }
 
-    return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'titulo'=>$titulo, 'idCurso' => $miCurso,'idComision' => $miComision));
+    return $this->render('reporteAsistencia/index.html.twig',array('alumnos_asistencia'=>$alumnos_asistencia,"clases"=>$clases,'cant_clases_tomadas'=>$cant_clases_tomadas,'titulo'=>$titulo, 'idCurso' => $miCurso,'idComision' => $miComision));
            // var_dump($alumnos_asistencia[0]); die();
          
   }
