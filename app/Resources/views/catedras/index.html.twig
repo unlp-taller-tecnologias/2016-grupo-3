@@ -1,41 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Catedras list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Borrado</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+    <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <caption>Seleccione una cátedra</caption>
         <tbody>
         {% for catedra in catedras %}
             <tr>
-                <td><a href="{{ path('catedras_show', { 'id': catedra.id }) }}">{{ catedra.id }}</a></td>
-                <td>{{ catedra.nombre }}</td>
-                <td>{{ catedra.borrado }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('catedras_show', { 'id': catedra.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('catedras_edit', { 'id': catedra.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('cursos_index', { 'idCatedra': catedra.id }) }}">{{ catedra.nombre }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('catedras_new') }}">Create a new entry</a>
-        </li>
-    </ul>
 {% endblock %}

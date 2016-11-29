@@ -25,15 +25,24 @@ class CursosController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        //Chequeo y asignaciones de permisos en la base para el usuario super admin
+        if ( $this->isGranted('ROLE_SUPER_SUPER_ADMIN') ) {
+            if (isset($_GET['idCatedra'])) {
+                $catedra = $_GET['idCatedra'];
+                asignarPrivilegios($this,$em,$catedra);
+            } else {
+                $catedra = 0;
+            }
+        }
         $catedra = getIdCatedra($this,$em);
 
         if (esSecretario($this)) {
-            $secretario=true;
+            $secretario = true;
         }else{
-            $secretario=false;
+            $secretario = false;
         }
+
         $nombreCatedra = $em->getRepository('AppBundle:Catedras')->findOneById($catedra);
-        //$userManager = $this->get('fos_user.user_manager');
         if (isset($catedra)) {
             $cursos = $em->getRepository('AppBundle:Cursos')->findByIdcatedra($catedra);
 
