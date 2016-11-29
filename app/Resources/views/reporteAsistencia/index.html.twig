@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-
-
+  {% if idComision == '' %}
+     <a class="btn btn-primary" href="{{ path('exportarExcelAsistencias') }}?curso={{idCurso}}">Reporte Excel Asistencias</a> 
+     {% else %}
+      <a class="btn btn-primary" href="{{ path('exportarExcelAsistencias') }}?comision={{idComision}}">Reporte Excel Asistencias</a> 
+    {% endif %}
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Reporte de asistencia {{ titulo }}</caption>
         <thead>
@@ -38,7 +40,7 @@
                
                 <td>{{ clases|length }}</td>
                 <td>{{ cant_clases_tomadas }}</td>
-                <td>{{ cant * 100 / cant_clases_tomadas }}%</td>
+                <td>{{ cant }} / {{cant_clases_tomadas }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -48,5 +50,6 @@
     {% elseif idComision %}
          <a class="btn btn-primary" href="{{ path('alumnos_index') }}?id={{ idComision }}">Volver</a>
     {% endif %}
+  }
     
 {% endblock %}
