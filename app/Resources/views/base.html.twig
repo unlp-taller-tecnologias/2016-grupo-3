@@ -35,10 +35,12 @@
             <ul class="nav navbar-nav">
     
                 <li ><a href="{{ asset('')}}">Home</a></li>
-                <li ><a href="{{ asset('/cursos')}}"> CURSOS</a>  </li>
-     
-
-         
+                {% if is_granted('ROLE_SUPER_SUPER_ADMIN') %}
+                <li ><a href="{{ asset('/catedras')}}"> Catedras</a>  </li>
+                {% else %}
+                <li ><a href="{{ asset('/cursos')}}"> Cursos</a>  </li>
+                {% endif %}
+                
               </ul>
 
         <ul class="nav navbar-nav navbar-right">

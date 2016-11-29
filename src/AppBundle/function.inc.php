@@ -1,4 +1,6 @@
 <?php
+use AppBundle\Entity\UserCatedra;
+
 function getIdCatedra($controller,$em) {
         $catedra = $controller->getUser()->getCatedra();
         if (null != $catedra) $catedra = $catedra->getId();
@@ -10,6 +12,20 @@ function getIdCatedra($controller,$em) {
         }
         return $catedra;
 }
+
+function asignarPrivilegios($controller,$em,$idCatedra) {
+        $userCatedra = $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($controller->getUser()->getId());
+        if (null != $userCatedra) {
+            $catedra = $userCatedra->setIdcatedra($idCatedra);
+        } else {
+            $userCatedra = new UserCatedra();
+            $userCatedra->setIduser($controller->getUser()->getId());
+            $userCatedra->setIdcatedra($idCatedra);
+        }
+        $em->persist($userCatedra);
+        $em->flush();
+}
+
 
 function esSecretario($controller){
 	$catedra = $controller->getUser()->getCatedra();
