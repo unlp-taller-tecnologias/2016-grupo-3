@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-
+  {% if comision == '' %}
+     <a class="btn btn-primary" href="{{ path('exportarExcelNotas') }}?curso={{cursada}}">Reporte Excel Notas</a> 
+     {% else %}
+      <a class="btn btn-primary" href="{{ path('exportarExcelNotas') }}?comision={{comision}}">Reporte Excel Notas</a> 
+    {% endif %}
 
     <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <caption>Reporte de notas {{titulo}}</caption>

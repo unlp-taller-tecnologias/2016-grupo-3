@@ -140,7 +140,7 @@ class reporteAsistenciaController extends Controller
       {
           $em = $this->getDoctrine()->getManager();
 
-   if (isset($_GET['comision'])) {
+   if (isset($_GET['comision']) or isset($_GET['curso'])) {
               // recuperamos los elementos de base de datos que queremos exportar
           $query = $em->getRepository('AppBundle:Alumnos')
               ->createQueryBuilder('e')
@@ -148,13 +148,19 @@ class reporteAsistenciaController extends Controller
 
           $result = $query->getResult();
 
+          if(isset($_GET['comision'])){  
+              $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['comision']);
 
-            $comision = $em->getRepository('AppBundle:Comisiones')->findOneById($_GET['comision']);
-
-            $curso = $comision->getIdcurso();
-             $alumnos = $comision->getAlumnos();
+              $curso = $comision->getIdcurso();
+               $alumnos = $comision->getAlumnos();
+               $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($curso);
+          }elseif (isset($_GET['curso'])) {
+              $alumnos = $em->getRepository('AppBundle:Inscriptos')->findByIdcurso($_GET['curso']);
+              $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['curso']);
+              //$alumnos = $em->getRepository('AppBundle:Alumnos')->findBy($inscriptos/>getIdAlumno());
+          }
            //   var_dump($id);die();
-            $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($curso);
+            
             $clases = $cursos->getClases();
 
 
@@ -178,8 +184,11 @@ class reporteAsistenciaController extends Controller
 
           $phpExcelObject->setActiveSheetIndex(0)
           ->setCellValue('B1', $cursos->getNombre())
-          ->setCellValue('C1',  $comision->getNombre())
-              ->setCellValue('B2', 'Nombre y Apellido');
+          ->setCellValue('B2', 'Nombre y Apellido');
+          if(isset($_GET['comision'])){
+            $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C1',  $comision->getNombre());
+          }
+              
               $address = 'B2';
 
                 foreach ($clases as $clas) {
@@ -203,6 +212,12 @@ class reporteAsistenciaController extends Controller
                     $first = ++$first;
                     $address = $first.$address[1];
                   $phpExcelObject->setActiveSheetIndex(0)->setCellValue($address, 'Porcentaje presente');
+                  if (isset($_GET['curso'])) {
+                    $first = $address[0];
+                    $first = ++$first;
+                    $address = $first.$address[1];
+                  $phpExcelObject->setActiveSheetIndex(0)->setCellValue($address, 'Comision');
+                  }
               
 
           // fijamos un ancho a las distintas columnas
@@ -236,6 +251,9 @@ class reporteAsistenciaController extends Controller
             $asistencias = array();
             $alumnos_asistencia = array();
             foreach ($alumnos as $alumno) {
+              if (isset($_GET['curso'])) {
+                    $comision = $alumno->getIdComision()->getNombre();
+                  }
                 $alumno = $alumno->getIdAlumno();
                 foreach ($clases as $clas) {
                    $asistencia = encontrarUnaAsistenciaByAlumnoAndClase($em,$alumno->getId(),$clas->getId());
@@ -275,7 +293,10 @@ class reporteAsistenciaController extends Controller
                   ->setCellValue($address++.$row, $cant_clases_tomadas);
                    $phpExcelObject->setActiveSheetIndex(0)
                   ->setCellValue($address++.$row, $cant.'/'.$cant_clases_tomadas);
-             
+                  if (isset($_GET['curso'])) {
+                    $phpExcelObject->setActiveSheetIndex(0)
+                  ->setCellValue($address++.$row, $item['comision']);
+                   }
 
               $row++;
           }
@@ -287,79 +308,7 @@ class reporteAsistenciaController extends Controller
           // y por último se añaden las cabeceras
           $dispositionHeader = $response->headers->makeDisposition(
               ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-              'ejemplo.xls'
-          );
-          $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-          $response->headers->set('Pragma', 'public');
-          $response->headers->set('Cache-Control', 'maxage=1');
-          $response->headers->set('Content-Disposition', $dispositionHeader);
-
-          return $response;
-          }elseif (isset($_GET['curso'])) {
-            // recuperamos los elementos de base de datos que queremos exportar
-          $query = $em->getRepository('AppBundle:Alumnos')
-              ->createQueryBuilder('e')
-              ->getQuery();
-
-          $result = $query->getResult();
-
-          // solicitamos el servicio 'phpexcel' y creamos el objeto vacío...
-          $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
-
-          // ...y le asignamos una serie de propiedades
-          $phpExcelObject->getProperties()
-              ->setCreator("Vabadus")
-              ->setLastModifiedBy("Vabadus")
-              ->setTitle("Ejemplo de exportación")
-              ->setSubject("Ejemplo")
-              ->setDescription("Listado de ejemplo.")
-              ->setKeywords("vabadus exportar excel ejemplo");
-
-          // establecemos como hoja activa la primera, y le asignamos un título
-          $phpExcelObject->setActiveSheetIndex(0);
-          $phpExcelObject->getActiveSheet()->setTitle('Ejemplo de exportación');
-          
-          // escribimos en distintas celdas del documento el título de los campos que vamos a exportar
-          $phpExcelObject->setActiveSheetIndex(0)
-              ->setCellValue('B2', 'Campo 1')
-              ->setCellValue('C2', 'Campo 2')
-              ->setCellValue('D2', 'Campo 3')
-              ->setCellValue('E2', 'Campo 4');
-
-          // fijamos un ancho a las distintas columnas
-          $phpExcelObject->setActiveSheetIndex(0)
-              ->getColumnDimension('B')
-              ->setWidth(30);
-          $phpExcelObject->setActiveSheetIndex(0)
-              ->getColumnDimension('C')
-              ->setWidth(25);
-          $phpExcelObject->setActiveSheetIndex(0)
-              ->getColumnDimension('D')
-              ->setWidth(15);
-          $phpExcelObject->setActiveSheetIndex(0)
-              ->getColumnDimension('E')
-              ->setWidth(20);
-
-          // recorremos los registros obtenidos de la consulta a base de datos escribiéndolos en las celdas correspondientes
-          $row = 3;
-          foreach ($result as $item) {
-              $phpExcelObject->setActiveSheetIndex(0)
-                  ->setCellValue('B'.$row, $item->getNombre())
-                  ->setCellValue('C'.$row, $item->getApellido())
-                  ->setCellValue('D'.$row, $item->getOrigen())
-                  ->setCellValue('E'.$row, $item->getTelefono());
-
-              $row++;
-          }
-
-          // se crea el writer
-          $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
-          // se crea el response
-          $response = $this->get('phpexcel')->createStreamedResponse($writer);
-          // y por último se añaden las cabeceras
-          $dispositionHeader = $response->headers->makeDisposition(
-              ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-              'ejemplo.xls'
+              'reporteAsistencias.xls'
           );
           $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
           $response->headers->set('Pragma', 'public');
@@ -368,7 +317,5 @@ class reporteAsistenciaController extends Controller
 
           return $response;
           }
-        
       }
- 
 }
