@@ -39,8 +39,8 @@ class reporteAlumnoController extends Controller
          $titulo .=", ".$alumno->getNombre();
          $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['idCursada']);
          $clases = $cursos->getClases();
-         $cant_presentes="";
-         $cant_clases_tomadas=""; 
+         $cant_presentes=0;
+         $cant_clases_tomadas=0; 
           foreach ($clases as $clas) {
                     if ($clas->getEstado() == "finalizada") {
                       if ($clas->getRequerida() == 1) {
