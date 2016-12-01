@@ -11,9 +11,11 @@
         <thead>
             <tr>
                 <th>Nombre y Apellido</th>
-                 <th>Curso</th>
+                 {# <th>Curso</th> #}
                  {% if idComision == '' %}
                     <th>Comision</th>
+                {% else %}
+                    <th>Curso</th>
                 {% endif %}
                     {% for clases in clases %}
                      <th>{{ clases.nombre }}</th>
@@ -29,9 +31,11 @@
        {% for alumnos_asistencia in alumnos_asistencia %}
             <tr>
                 <td>{{ alumnos_asistencia.alumno.nombre }},{{ alumnos_asistencia.alumno.apellido }}</td>
-                <td>{{ alumnos_asistencia.curso.nombre }}</td>
+                {# <td>{{ alumnos_asistencia.curso.nombre }}</td> #}
                 {% if idComision == '' %}
                     <td>{{ alumnos_asistencia.comision.nombre }}</td>
+                {% else %}
+                    <td>{{ alumnos_asistencia.curso.nombre }}</td>
                 {% endif %}
                 
                 

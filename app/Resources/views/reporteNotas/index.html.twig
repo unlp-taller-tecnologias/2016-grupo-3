@@ -12,10 +12,12 @@
         <thead>
             <tr>
                 <th rowspan="2" style="vertical-align: middle;">Nombre y Apellido</th>
-                <th rowspan="2" style="vertical-align: middle;">Curso</th>
+                
 
               {% if comision == '' %}
                 <th rowspan="2" style="vertical-align: middle;">Comision</th>
+              {% else %}
+                <th rowspan="2" style="vertical-align: middle;">Curso</th>
               {% endif %}
                 
 
@@ -41,10 +43,12 @@
 
   
                 <td>{{alumno_parciales.alumno.apellido}}, {{alumno_parciales.alumno.nombre}}</td>
-                <td>{{alumno_parciales.curso.nombre}}</td>
+                
 
               {% if comision == '' %}
                 <td>{{alumno_parciales.comision.nombre}}</td>
+                {% else %}
+                  <td>{{alumno_parciales.curso.nombre}}</td>
               {% endif %}
                 
                  {% for par in alumno_parciales.parcial_alumno %}
