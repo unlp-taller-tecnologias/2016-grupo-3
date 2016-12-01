@@ -76,11 +76,22 @@
                           
                         {% endfor %}
             </tr>
+             <tr>
+                {% for array_parcial_instancia in array_parcial_instancia %}
+                  {% set instancias = array_parcial_instancia.instancia %}
+                  {% for instancia in instancias %}
+                    <th>{{ instancia.inst }}</th>
+                  {% endfor %}
+                {% endfor %}
+            </tr>
         </thead>
         <tbody>
      
             <tr>
-                
+                    {% if parcial_alumno|length == 0 %}
+
+                      <tr>  No Hay datos de parciales</tr>
+                    {% endif %}
                      {% for par in parcial_alumno %}
                         {% for instan in par.instancia_parcial %}
                             
@@ -102,5 +113,5 @@
     </table>
 </div>
 </div>
-         <a class="btn btn-primary" href="">Volver</a>
+         <a class="btn btn-primary" href="{{ path('comisiones_index') }}?id={{ idCurso }}">Volver</a>
 {% endblock %}

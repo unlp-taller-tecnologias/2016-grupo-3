@@ -32,7 +32,7 @@ class reporteAsistenciaController extends Controller
            
             $cursos = $em->getRepository('AppBundle:Cursos')->findOneById($_GET['curso']);
             $clases = $cursos->getClases();
-            $cant_clases_tomadas="";
+            $cant_clases_tomadas=0;
              foreach ($clases as $clas) {
                     if ($clas->getEstado() == "finalizada") {
                       if ($clas->getRequerida() == 1) {

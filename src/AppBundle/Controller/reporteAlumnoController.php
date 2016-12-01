@@ -112,10 +112,10 @@ class reporteAlumnoController extends Controller
                  
                   }
 
-
+       $idCurso= $_GET['idCursada'];
          //OTRAS CURSADAS DE LA MISMA CATEDRA EN LA QUE PARTICIPO
 
-         return $this->render('reporteAlumno/index.html.twig',array('titulo'=>$titulo,'alumno'=>$alumno,'comision'=>$comision,'clases_alumno'=>$clases_alumno,'parcial_alumno'=>$parcial_alumno,'array_parcial_instancia'=>$array_parcial_instancia,'otras_comisiones'=>$otras_comisiones));
+         return $this->render('reporteAlumno/index.html.twig',array('titulo'=>$titulo,'alumno'=>$alumno,'comision'=>$comision,'clases_alumno'=>$clases_alumno,'parcial_alumno'=>$parcial_alumno,'array_parcial_instancia'=>$array_parcial_instancia,'otras_comisiones'=>$otras_comisiones,'idCurso'=>$idCurso));
     }
 
  
