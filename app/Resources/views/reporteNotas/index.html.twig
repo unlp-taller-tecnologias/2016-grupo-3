@@ -11,17 +11,29 @@
         <caption>Reporte de notas {{titulo}}</caption>
         <thead>
             <tr>
-                <th>Nombre y Apellido</th>
-                 <th>Curso</th>
-                  <th>Comision</th>
-                       {% for array_parcial_instancia in array_parcial_instancia %}
-                          <th colspan="{{ array_parcial_instancia.instancia|length }}" style="text-align:center">{{ array_parcial_instancia.parcial.nombre }}</th>
-                          
-                        {% endfor %}
-                    
-                    
+                <th rowspan="2" style="vertical-align: middle;">Nombre y Apellido</th>
+                <th rowspan="2" style="vertical-align: middle;">Curso</th>
+
+              {% if comision == '' %}
+                <th rowspan="2" style="vertical-align: middle;">Comision</th>
+              {% endif %}
+                
+
+                {% for array_parcial_instancia in array_parcial_instancia %}
+                  <th colspan="{{ array_parcial_instancia.instancia|length }}" style="text-align:center">{{ array_parcial_instancia.parcial.nombre }}</th>
+                {% endfor %}
 
             </tr>
+
+            <tr>
+                {% for array_parcial_instancia in array_parcial_instancia %}
+                  {% set instancias = array_parcial_instancia.instancia %}
+                  {% for instancia in instancias %}
+                    <th>{{ instancia.inst }}</th>
+                  {% endfor %}
+                {% endfor %}
+            </tr>
+
         </thead>
         <tbody>
        {% for alumno_parciales in alumno_parciales %}
@@ -30,12 +42,16 @@
   
                 <td>{{alumno_parciales.alumno.apellido}}, {{alumno_parciales.alumno.nombre}}</td>
                 <td>{{alumno_parciales.curso.nombre}}</td>
+
+              {% if comision == '' %}
                 <td>{{alumno_parciales.comision.nombre}}</td>
+              {% endif %}
+                
                  {% for par in alumno_parciales.parcial_alumno %}
                         {% for instan in par.instancia_parcial %}
                             
                              <td>    
-                              <h4>{{instan.instancia.nombre}}:</h4>
+                              {# <h4>{{instan.instancia.nombre}}:</h4> #}
                               <b style="font-weight:bold;">ESTADO:</b> {{instan.estado}}<br>
                               <b>NOTA:</b> {{instan.nota}}<br>
                              <b>CONDICION:</b> {{instan.condicion}}<br>
