@@ -363,7 +363,7 @@ class reporteNotasController extends Controller
           // y por último se añaden las cabeceras
           $dispositionHeader = $response->headers->makeDisposition(
               ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-              'reporteAsistencias.xls'
+              'reporteNotas.xls'
           );
           $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
           $response->headers->set('Pragma', 'public');
