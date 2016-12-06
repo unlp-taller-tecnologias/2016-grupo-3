@@ -63,8 +63,11 @@ class UserController extends Controller
                     $user->setEnabled(1);
                     
                     $user->setCatedra($em->getRepository('AppBundle:Catedras')->findOneById(
-                        $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())));
+                        $em->getRepository('AppBundle:UserCatedra')->findOneByIduser($this->getUser())->getIdCatedra()));
                     //todo lo de ariba te trae la catedra solo si es secretario.
+                    /*$algo=$em->getRepository('AppBundle:UserCatedra')->findOneByIduser(1);
+                    print($user->getCatedra());
+                    die();*/
                     $userManager->updateUser($user);
                     return $this->redirectToRoute('user_index', array('id' => $user->getId()));
                 }else{
