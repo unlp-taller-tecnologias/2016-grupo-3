@@ -97,8 +97,8 @@ class reporteNotasController extends Controller
                   }
                $alumno_parciales[] = (array('alumno'=>$alumno,'curso'=>$curso,'comision'=>$comision,'parcial_alumno'=>$parcial_alumno));
                $parcial_alumno="";
-               $titulo=$curso->getNombre();
             }
+            $titulo=$curso->getNombre();
              }
             
             
@@ -169,9 +169,8 @@ class reporteNotasController extends Controller
                   }
                $alumno_parciales[] = (array('alumno'=>$alumno,'curso'=>$curso,'comision'=>$comision,'parcial_alumno'=>$parcial_alumno));
                $parcial_alumno="";
-               $titulo=$comision->getNombre();
             }
-            
+            $titulo=$comision->getNombre();
             $idComision=$_GET['comision'];
       }
 
@@ -179,6 +178,9 @@ class reporteNotasController extends Controller
               $idComision='';
             }else{
               $idCurso='';
+            }
+            if (empty($titulo)) {
+              $titulo='';
             }
             return $this->render('reporteNotas/index.html.twig', array(
                 'alumno_parciales' => $alumno_parciales, 'instancias' => $instancias, "parciales" => $parciales,'array_parcial_instancia'=>$array_parcial_instancia,'titulo'=>$titulo,'cursada'=>$idCurso,'comision'=>$idComision
